@@ -1,0 +1,109 @@
+<%
+const title = 'Messages - Admin AWA';
+const pageTitle = '💬 Messages du support client';
+const currentPage = 'pages';
+const messages = typeof locals !== 'undefined' && locals.messages ? locals.messages : [];
+%>
+
+<%- include('layout', { 
+    title: title, 
+    pageTitle: pageTitle, 
+    currentPage: currentPage,
+    pageCount: 0,
+    userCount: 0,
+    content: `
+    <div class="admin-table-container">
+        <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--admin-border); display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem;">
+                📬 Tous les messages (${messages ? messages.length : 0})
+            </h3>
+            <span style="color: var(--admin-text-secondary);">
+                <span style="background: #ff1744; color: white; padding: 0.2rem 0.8rem; border-radius: 50px; font-size: 0.8rem;">
+                    ${messages ? messages.filter(m => m.status === 'unread').length : 0} non lus
+                </span>
+            </span>
+        </div>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Client</th>
+                    <th>Sujet</th>
+                    <th>Message</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${messages && messages.length > 0 ? messages.map(function(m) {
+                    const statusLabels = {
+                        'unread': '<span class="status" style="background:#ff1744;color:white;">🔴 Non lu</span>',
+                        'read': '<span class="status" style="background:#2979ff;color:white;">📖 Lu</span>',
+                        'replied': '<span class="status" style="background:#00c853;color:white;">✅ Répondu</span>',
+                        'archived': '<span class="status" style="background:#888;color:white;">📦 Archivé</span>'
+                    };
+                    return '<tr>' +
+                        '<td>' + new Date(m.createdAt).toLocaleDateString() + ' ' + new Date(m.createdAt).toLocaleTimeString() + '</td>' +
+                        '<td><strong>' + m.name + '</strong><br><small style="color:#888;">' + m.email + '</small><br><small style="color:#888;">' + (m.phone || '') + '</small></td>' +
+                        '<td><strong>' + m.subject + '</strong></td>' +
+                        '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + m.message.substring(0, 60) + (m.message.length > 60 ? '...' : '') + '</td>' +
+                        '<td>' + (statusLabels[m.status] || statusLabels.unread) + '</td>' +
+                        '<td>' +
+                            (m.status === 'unread' ? '<button onclick="markRead(\'' + m._id + '\')" class="admin-btn admin-btn-primary" style="padding:0.2rem 0.6rem;font-size:0.7rem;">📖</button> ' : '') +
+                            '<button onclick="replyMessage(\'' + m._id + '\', \'' + m.email + '\')" class="admin-btn admin-btn-success" style="padding:0.2rem 0.6rem;font-size:0.7rem;">✉️</button> ' +
+                            '<button onclick="deleteMessage(\'' + m._id + '\')" class="admin-btn admin-btn-danger" style="padding:0.2rem 0.6rem;font-size:0.7rem;">🗑️</button>' +
+                        '</td>' +
+                    '</tr>';
+                }).join('') : '<tr><td colspan="6" style="text-align:center;padding:3rem;color:#888;">Aucun message</td></tr>'}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    async function markRead(id) {
+        try {
+            const response = await fetch('/admin/contacts/' + id + '/read', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const result = await response.json();
+            if(result.success) location.reload();
+        } catch(error) {
+            alert('Erreur réseau');
+        }
+    }
+
+    function replyMessage(id, email) {
+        const reply = prompt('✉️ Répondre à ' + email + '\n\nEntrez votre réponse :');
+        if(reply && reply.trim()) {
+            fetch('/admin/contacts/' + id + '/reply', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ reply: reply.trim() })
+            })
+            .then(r => r.json())
+            .then(result => {
+                if(result.success) {
+                    alert('✅ Réponse envoyée avec succès !');
+                    location.reload();
+                }
+            })
+            .catch(() => alert('Erreur réseau'));
+        }
+    }
+
+    async function deleteMessage(id) {
+        if(!confirm('Supprimer ce message définitivement ?')) return;
+        try {
+            const response = await fetch('/admin/contacts/' + id, {
+                method: 'DELETE'
+            });
+            const result = await response.json();
+            if(result.success) location.reload();
+        } catch(error) {
+            alert('Erreur réseau');
+        }
+    }
+    </script>
+    `
+}) %>

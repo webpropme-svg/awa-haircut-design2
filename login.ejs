@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <div style="max-width: 500px; margin: 4rem auto; padding: 0 2rem;">
+        <!-- Messages d'alerte -->
+        <% if (success) { %>
+            <div style="background: #4CAF50; color: white; padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; border-left: 4px solid #2E7D32;">
+                <i class="fas fa-check-circle" style="font-size: 1.5rem;"></i>
+                <span><%= success %></span>
+            </div>
+        <% } %>
+        <% if (error) { %>
+            <div style="background: #f44336; color: white; padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; border-left: 4px solid #c62828;">
+                <i class="fas fa-exclamation-circle" style="font-size: 1.5rem;"></i>
+                <span><%= error %></span>
+            </div>
+        <% } %>
+
+        <div style="background: white; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow);">
+            <h1 style="font-family: 'Playfair Display', serif; font-size: 2rem; text-align: center; color: var(--primary-dark);">Connexion</h1>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Connectez-vous à votre compte AWA HAIRCUT</p>
+
+            <form action="/auth/login" method="POST" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div>
+                    <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Email</label>
+                    <input type="email" name="email" required style="width: 100%; padding: 0.8rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                </div>
+                <div>
+                    <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Mot de passe</label>
+                    <input type="password" name="password" required style="width: 100%; padding: 0.8rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                </div>
+                <button type="submit" style="padding: 1rem; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--text-dark); border: none; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">Se connecter</button>
+            </form>
+
+            <p style="text-align: center; margin-top: 1.5rem; color: #666;">
+                Pas encore de compte ? <a href="/auth/register" style="color: var(--primary); font-weight: 600; text-decoration: none;">S'inscrire</a>
+            </p>
+        </div>
+    </div>
+
+    <footer class="footer-premium">
+        <div class="footer-bottom">
+            <p>&copy; <%= currentYear %> AWA HAIRCUT DESIGN. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>

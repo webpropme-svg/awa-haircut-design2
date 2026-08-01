@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<%= page.metaDescription %>">
+    <meta name="keywords" content="<%= page.keywords.join(', ') %>">
+    <meta property="og:title" content="<%= page.title %>">
+    <meta property="og:description" content="<%= page.description %>">
+    <meta property="og:image" content="<%= page.images[0]?.url || '/images/logo.png' %>">
+    <meta property="og:type" content="website">
+    <title><%= title %></title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/page.css">
+</head>
+<body>
+    <header class="header-premium">
+        <nav class="nav-premium">
+            <div class="logo">
+                <a href="/">
+                    <span class="logo-text">AWA</span>
+                    <span class="logo-sub">HAIRCUT DESIGN</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="/services"><i class="fas fa-concierge-bell"></i> Services</a></li>
+                <li><a href="/gallery"><i class="fas fa-images"></i> Galerie</a></li>
+                <li><a href="/booking"><i class="fas fa-calendar-plus"></i> Réservation</a></li>
+                <li><a href="/reviews"><i class="fas fa-star"></i> Avis</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> À propos</a></li>
+                <li><a href="/pages/category/coupe"><i class="fas fa-cut"></i> Coupes</a></li>
+                <li><a href="/pages/category/couleur"><i class="fas fa-palette"></i> Couleurs</a></li>
+                <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <% if (user) { %>
+                    <div class="user-menu">
+                        <span class="user-name">
+                            <i class="fas fa-user-circle"></i> 
+                            <%= user.name %>
+                            <span class="user-role"><%= user.role === 'admin' ? '👑 Admin' : '' %></span>
+                        </span>
+                        <a href="/booking/my-bookings" class="btn-profile" title="Mes réservations">
+                            <i class="fas fa-calendar-check"></i>
+                        </a>
+                        <a href="/auth/profile" class="btn-profile" title="Mon profil">
+                            <i class="fas fa-cog"></i>
+                        </a>
+                        <a href="/auth/logout" class="btn-logout" title="Déconnexion">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    </div>
+                <% } else { %>
+                    <a href="/auth/login" class="btn-login"><i class="fas fa-user"></i> Connexion</a>
+                    <a href="/auth/register" class="btn-register"><i class="fas fa-user-plus"></i> Inscription</a>
+                <% } %>
+                <a href="/booking" class="btn-book">Réserver</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="page-content-wrapper">
+        <div class="page-hero" style="background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);">
+            <div class="hero-content">
+                <h1><%= page.title %></h1>
+                <p><%= page.description %></p>
+                <div class="page-meta">
+                    <span><i class="far fa-clock"></i> <%= page.duration %> min</span>
+                    <span><i class="fas fa-tag"></i> $<%= page.price.min %> - $<%= page.price.max %></span>
+                    <span><i class="fas fa-eye"></i> <%= page.views %> vues</span>
+                    <span><i class="fas fa-star"></i> ★ 4.8/5</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-container">
+            <div class="page-main">
+                <!-- Image principale avec zoom -->
+                <% if (page.images && page.images.length > 0) { %>
+                    <div style="margin-bottom: 2rem; border-radius: 16px; overflow: hidden; cursor: pointer;" onclick="openFullscreen(this.querySelector('img'))">
+                        <img src="<%= page.images[0].url %>" alt="<%= page.images[0].alt || page.title %>" style="width:100%; border-radius:16px; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <div style="text-align: center; font-size: 0.8rem; color: #888; margin-top: 0.3rem;">
+                            <i class="fas fa-expand"></i> Cliquez sur l'image pour l'agrandir
+                        </div>
+                    </div>
+                <% } %>
+                
+                <%- page.content %>
+            </div>
+
+            <aside class="page-sidebar">
+                <div class="stylist-card">
+                    <h3>Votre Styliste</h3>
+                    <img src="<%= page.stylist.image %>" alt="<%= page.stylist.name %>" class="stylist-image" onclick="openFullscreen(this)" style="cursor:pointer;">
+                    <h4><%= page.stylist.name %></h4>
+                    <p><%= page.stylist.bio %></p>
+                    <a href="/booking" class="btn-book-now">Réserver avec elle</a>
+                </div>
+
+                <div class="related-pages">
+                    <h3>Styles similaires</h3>
+                    <% if (relatedPages && relatedPages.length > 0) { %>
+                        <% relatedPages.forEach(rel => { %>
+                            <a href="/pages/<%= rel.pageId %>" class="related-link">
+                                <i class="fas fa-arrow-right"></i> <%= rel.title %>
+                            </a>
+                        <% }) %>
+                    <% } %>
+                </div>
+
+                <div class="share-section">
+                    <h3>Partager ce style</h3>
+                    <div class="social-share">
+                        <a href="#" class="share-btn facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="share-btn instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="share-btn pinterest"><i class="fab fa-pinterest"></i></a>
+                        <a href="#" class="share-btn twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+
+    <script src="/js/zoom.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

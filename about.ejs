@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212,175,55,0.15), transparent 60%);
+        }
+        .about-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        .about-hero h1 span { color: var(--gold); }
+        .about-hero p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 1rem auto 0;
+            position: relative;
+            z-index: 1;
+        }
+        .about-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .about-grid .text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+        }
+        .about-grid .text h2 span { color: var(--gold); }
+        .about-grid .text p {
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 1rem;
+        }
+        .about-grid .image {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .about-grid .image i { font-size: 6rem; color: white; margin-bottom: 1rem; }
+        .about-grid .image h3 { font-family: 'Playfair Display', serif; font-size: 2rem; color: white; }
+        .about-grid .image p { color: rgba(255,255,255,0.8); }
+        .values {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        .value-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .value-card:hover { transform: translateY(-10px); box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+        .value-card i { font-size: 3rem; color: var(--gold); margin-bottom: 1rem; display: block; }
+        .value-card h3 { font-family: 'Playfair Display', serif; }
+        .value-card p { color: #666; font-size: 0.95rem; }
+        @media (max-width: 768px) {
+            .about-hero h1 { font-size: 2.5rem; }
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .values { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <section class="about-hero">
+        <h1>Notre <span>Histoire</span></h1>
+        <p>New York, berceau de l'excellence capillaire</p>
+    </section>
+
+    <section class="about-section">
+        <div class="about-grid">
+            <div class="text">
+                <h2>Une histoire née à <span>New York</span></h2>
+                <p>
+                    Fondé par Awa en 2024, AWA HAIRCUT DESIGN est né d'une passion : révéler la beauté unique de chaque femme à travers des coiffures d'exception.
+                </p>
+                <p>
+                    <strong>New York</strong>, ville de tous les possibles, a été le berceau de cette aventure. C'est dans les salons les plus prestigieux de Manhattan que notre fondatrice a perfectionné son art, avant de créer son propre concept.
+                </p>
+                <p>
+                    Aujourd'hui, AWA HAIRCUT DESIGN est une référence internationale, avec 1000 styles uniques et une équipe de stylistes talentueuses venues des quatre coins du monde.
+                </p>
+            </div>
+            <div class="image">
+                <i class="fas fa-city"></i>
+                <h3>New York, USA</h3>
+                <p>Notre maison mère au cœur de Manhattan</p>
+            </div>
+        </div>
+
+        <div class="values">
+            <div class="value-card">
+                <i class="fas fa-gem"></i>
+                <h3>Excellence</h3>
+                <p>Des prestations haut de gamme avec des produits et techniques d'exception.</p>
+            </div>
+            <div class="value-card">
+                <i class="fas fa-heart"></i>
+                <h3>Passion</h3>
+                <p>L'amour de la coiffure et du métier transmis à chaque cliente.</p>
+            </div>
+            <div class="value-card">
+                <i class="fas fa-globe-americas"></i>
+                <h3>Inspiration</h3>
+                <p>Des styles inspirés des tendances du monde entier, réinventés à New York.</p>
+            </div>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

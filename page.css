@@ -1,0 +1,328 @@
+/* Page Hero */
+.page-hero {
+    padding: 4rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-hero .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--text-light);
+}
+
+.page-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 5px 30px rgba(0,0,0,0.5);
+}
+
+.page-hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.page-meta {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.page-meta span {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Page Container */
+.page-container {
+    max-width: 1400px;
+    margin: -2rem auto 0;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 3rem;
+    position: relative;
+}
+
+.page-main {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.page-main h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem;
+}
+
+.page-main h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin: 2rem 0 1rem;
+    color: var(--primary-dark);
+}
+
+.page-main h3 {
+    font-size: 1.3rem;
+    margin: 1.5rem 0 1rem;
+    color: var(--text-dark);
+}
+
+.page-main p {
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 1rem;
+}
+
+.page-main ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.page-main ul li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-main ul li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 1.2rem;
+}
+
+/* Reviews */
+.reviews {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.review-card {
+    background: #f8f8f8;
+    padding: 2rem;
+    border-radius: 15px;
+    border-left: 4px solid var(--gold);
+    transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+}
+
+.stars {
+    color: var(--gold);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.review-card p {
+    font-style: italic;
+    color: #555;
+    margin: 0.5rem 0;
+}
+
+.review-author {
+    margin-top: 0.5rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* Sidebar */
+.page-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.stylist-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.stylist-card h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.stylist-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 1rem auto;
+    border: 3px solid var(--gold);
+    object-fit: cover;
+}
+
+.stylist-card h4 {
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+    margin: 0.5rem 0;
+}
+
+.stylist-card p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.btn-book-now {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.8rem 2rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-book-now:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255,20,147,0.3);
+}
+
+.related-pages {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.related-pages h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.related-link {
+    display: block;
+    padding: 0.8rem 0;
+    color: var(--text-dark);
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.related-link:hover {
+    color: var(--primary);
+    padding-left: 1rem;
+}
+
+.share-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.share-section h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.social-share {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.share-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.share-btn:hover {
+    transform: translateY(-5px) scale(1.1);
+}
+
+.share-btn.facebook { background: #1877f2; }
+.share-btn.instagram { background: #e4405f; }
+.share-btn.pinterest { background: #bd081c; }
+.share-btn.twitter { background: #1da1f2; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .page-container {
+        grid-template-columns: 1fr;
+        margin-top: -1rem;
+    }
+    
+    .page-main {
+        padding: 1.5rem;
+    }
+    
+    .reviews {
+        grid-template-columns: 1fr;
+    }
+    
+    .page-meta {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .page-meta span {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .page-main h1 {
+        font-size: 2rem;
+    }
+    
+    .page-main h2 {
+        font-size: 1.5rem;
+    }
+}

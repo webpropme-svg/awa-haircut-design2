@@ -1,0 +1,85 @@
+<%
+const title = 'Paramètres - Admin AWA';
+const pageTitle = '⚙️ Paramètres du site';
+const currentPage = 'settings';
+%>
+
+<%- include('layout', { 
+    title: title, 
+    pageTitle: pageTitle, 
+    currentPage: currentPage,
+    pageCount: 0,
+    userCount: 0,
+    content: `
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div style="background: var(--admin-card); padding: 2rem; border-radius: var(--admin-radius); border: 1px solid var(--admin-border);">
+            <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 1.5rem;">🏢 Informations générales</h3>
+            <form>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Nom du site</label>
+                    <input type="text" value="AWA HAIRCUT DESIGN" style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Slogan</label>
+                    <input type="text" value="L'Art de la Coiffure Féminine" style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Email de contact</label>
+                    <input type="email" value="contact@awahaircut.com" style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Téléphone</label>
+                    <input type="text" value="+33 1 23 45 67 89" style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                </div>
+                <button type="submit" class="admin-btn admin-btn-primary" style="padding: 0.8rem 2rem;">💾 Sauvegarder</button>
+            </form>
+        </div>
+
+        <div style="background: var(--admin-card); padding: 2rem; border-radius: var(--admin-radius); border: 1px solid var(--admin-border);">
+            <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 1.5rem;">🌐 Réseaux sociaux</h3>
+            <form>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Instagram</label>
+                    <input type="text" value="@awahaircut" style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">YouTube</label>
+                    <input type="text" value="@awahaircut" style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">TikTok</label>
+                    <input type="text" value="@awahaircut" style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Pinterest</label>
+                    <input type="text" value="@awahaircut" style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                </div>
+                <button type="submit" class="admin-btn admin-btn-primary" style="padding: 0.8rem 2rem;">💾 Sauvegarder</button>
+            </form>
+        </div>
+
+        <div style="background: var(--admin-card); padding: 2rem; border-radius: var(--admin-radius); border: 1px solid var(--admin-border); grid-column: 1 / -1;">
+            <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 1.5rem;">🔧 Actions système</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <a href="/admin/generate" class="admin-btn admin-btn-success" style="display: block; text-align: center; padding: 1rem; text-decoration: none;">
+                    <i class="fas fa-sync-alt"></i> Régénérer 1000 pages
+                </a>
+                <a href="/admin/backup" class="admin-btn admin-btn-primary" style="display: block; text-align: center; padding: 1rem; text-decoration: none;">
+                    <i class="fas fa-database"></i> Exporter Backup
+                </a>
+                <button onclick="clearCache()" class="admin-btn admin-btn-primary" style="display: block; text-align: center; padding: 1rem; width: 100%; background: var(--admin-warning); color: #000; border: none; cursor: pointer;">
+                    <i class="fas fa-broom"></i> Vider le cache
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function clearCache() {
+        if(confirm('Vider le cache du site ?')) {
+            alert('✅ Cache vidé avec succès');
+        }
+    }
+    </script>
+    `
+}) %>

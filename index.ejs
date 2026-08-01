@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/images.css">
+    <style>
+        .featured-services {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .featured-services h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .featured-services h2 span { color: var(--gold); }
+        .featured-services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        .featured-service-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .featured-service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border-color: var(--gold);
+        }
+        .featured-service-card i {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .featured-service-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .featured-service-card p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .why-us {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+        .why-us h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+        .why-us h2 span { color: var(--gold); }
+        .why-us-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        .why-us-card {
+            text-align: center;
+            color: white;
+        }
+        .why-us-card i {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .why-us-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .why-us-card p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .testimonials {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .testimonials h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .testimonials h2 span { color: var(--gold); }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .testimonial-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--gold);
+        }
+        .testimonial-card .stars {
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .testimonial-card p {
+            color: #555;
+            line-height: 1.8;
+            font-style: italic;
+        }
+        .testimonial-card .author {
+            margin-top: 1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        .numbers-section {
+            background: linear-gradient(135deg, #0f3460, #1a1a2e);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+        .numbers-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+        .numbers-grid .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--gold);
+            display: block;
+        }
+        .numbers-grid .label {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+            margin-top: 0.3rem;
+            display: block;
+        }
+        .news-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .news-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .news-section h2 span { color: var(--gold); }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .news-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.4s ease;
+        }
+        .news-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        .news-card .img {
+            height: 200px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+        .news-card .content {
+            padding: 1.5rem;
+        }
+        .news-card .content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .news-card .content p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .news-card .content .date {
+            color: #aaa;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: block;
+        }
+        @media (max-width: 1024px) {
+            .featured-services-grid { grid-template-columns: repeat(2, 1fr); }
+            .why-us-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: 1fr 1fr; }
+            .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+            .news-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .featured-services-grid { grid-template-columns: 1fr; }
+            .why-us-grid { grid-template-columns: 1fr; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .numbers-grid { grid-template-columns: 1fr 1fr; }
+            .news-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <!-- SECTION 1: HERO -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">L'Art de la Coiffure <span class="gold-text">Féminine</span></h1>
+            <p class="hero-subtitle">1000 styles uniques pour sublimer votre beauté</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">Styles Exclusifs</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Stylistes Experts</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">4.9</span>
+                    <span class="stat-label">⭐ Avis Clients</span>
+                </div>
+            </div>
+            <a href="/gallery" class="btn-hero">Découvrir nos créations</a>
+        </div>
+    </section>
+
+    <!-- SECTION 2: CATÉGORIES -->
+    <section class="categories-section">
+        <h2>Nos Catégories</h2>
+        <div class="categories-grid">
+            <% if (categories && categories.length > 0) { %>
+                <% categories.forEach((cat, index) => { %>
+                    <a href="/pages/category/<%= cat._id %>" class="category-card">
+                        <i class="fas fa-<%= ['cut', 'palette', 'wind', 'crown', 'spa', 'scissors', 'ring', 'leaf'][index % 8] %>"></i>
+                        <h3><%= cat._id.charAt(0).toUpperCase() + cat._id.slice(1) %></h3>
+                        <p><%= cat.count %> styles</p>
+                    </a>
+                <% }) %>
+            <% } %>
+        </div>
+    </section>
+
+    <!-- SECTION 3: SERVICES EN VEDETTE -->
+    <section class="featured-services">
+        <h2>Nos Services <span>Premium</span></h2>
+        <div class="featured-services-grid">
+            <div class="featured-service-card">
+                <i class="fas fa-cut"></i>
+                <h3>Coupe</h3>
+                <p>Des coupes tendance et personnalisées pour révéler votre beauté.</p>
+            </div>
+            <div class="featured-service-card">
+                <i class="fas fa-palette"></i>
+                <h3>Coloration</h3>
+                <p>Des couleurs vibrantes et sublimes pour illuminer votre regard.</p>
+            </div>
+            <div class="featured-service-card">
+                <i class="fas fa-wind"></i>
+                <h3>Brushing</h3>
+                <p>Un brushing parfait pour des cheveux pleins de vie et de volume.</p>
+            </div>
+            <div class="featured-service-card">
+                <i class="fas fa-crown"></i>
+                <h3>Coiffage</h3>
+                <p>Des coiffages élégants pour toutes vos occasions spéciales.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: POURQUOI NOUS CHOISIR -->
+    <section class="why-us">
+        <h2>Pourquoi <span>nous choisir</span> ?</h2>
+        <div class="why-us-grid">
+            <div class="why-us-card">
+                <i class="fas fa-gem"></i>
+                <h3>Excellence</h3>
+                <p>Des prestations haut de gamme avec des produits d'exception.</p>
+            </div>
+            <div class="why-us-card">
+                <i class="fas fa-users"></i>
+                <h3>Experts</h3>
+                <p>Une équipe de stylistes talentueuses passionnées par leur métier.</p>
+            </div>
+            <div class="why-us-card">
+                <i class="fas fa-leaf"></i>
+                <h3>Naturel</h3>
+                <p>Des soins respectueux de vos cheveux avec des produits naturels.</p>
+            </div>
+            <div class="why-us-card">
+                <i class="fas fa-calendar-check"></i>
+                <h3>Sur mesure</h3>
+                <p>Des prestations personnalisées adaptées à vos besoins et envies.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: STYLES POPULAIRES -->
+    <section class="featured-section">
+        <h2>Styles les plus populaires</h2>
+        <div class="featured-grid">
+            <% if (featuredPages && featuredPages.length > 0) { %>
+                <% featuredPages.slice(0, 8).forEach(page => { %>
+                    <div class="featured-card">
+                        <a href="/pages/<%= page.pageId %>">
+                            <div class="card-image">
+                                <img src="<%= page.images[0]?.url || '/images/placeholder.svg' %>" alt="<%= page.title %>" onclick="event.preventDefault(); openFullscreen(this);">
+                                <span class="card-category"><%= page.category %></span>
+                            </div>
+                            <div class="card-content">
+                                <h3><%= page.title %></h3>
+                                <p><%= page.description.substring(0, 80) %>...</p>
+                                <div class="card-meta">
+                                    <span><i class="fas fa-tag"></i> $<%= page.price.min %></span>
+                                    <span><i class="fas fa-clock"></i> <%= page.duration %> min</span>
+                                    <span><i class="fas fa-eye"></i> <%= page.views %></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <% }) %>
+            <% } %>
+        </div>
+    </section>
+
+    <!-- SECTION 6: TÉMOIGNAGES -->
+    <section class="testimonials">
+        <h2>Ce que disent nos <span>clientes</span></h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Une expérience exceptionnelle ! La coupe parfaite, le service impeccable. Je recommande AWA les yeux fermés."</p>
+                <div class="author">- Marie D.</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"La meilleure coloration que j'ai eue ! Des reflets sublimes et des cheveux en pleine santé. Un vrai talent."</p>
+                <div class="author">- Sophie M.</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Un salon d'exception à New York. L'équipe est professionnelle et à l'écoute. Je suis conquise !"</p>
+                <div class="author">- Emma B.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: CHIFFRES -->
+    <section class="numbers-section">
+        <div class="numbers-grid">
+            <div>
+                <span class="num">1000+</span>
+                <span class="label">Styles uniques</span>
+            </div>
+            <div>
+                <span class="num">50+</span>
+                <span class="label">Stylistes experts</span>
+            </div>
+            <div>
+                <span class="num">4.9</span>
+                <span class="label">⭐ Note moyenne</span>
+            </div>
+            <div>
+                <span class="num">98%</span>
+                <span class="label">Satisfaction client</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: ACTUALITÉS -->
+    <section class="news-section">
+        <h2>Actualités <span>AWA</span></h2>
+        <div class="news-grid">
+            <div class="news-card">
+                <div class="img">✨</div>
+                <div class="content">
+                    <h3>Nouvelle collection été 2026</h3>
+                    <p>Découvrez notre nouvelle collection de coiffures inspirées des tendances new-yorkaises.</p>
+                    <span class="date">📅 1 août 2026</span>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="img">🗽</div>
+                <div class="content">
+                    <h3>AWA s'installe à Manhattan</h3>
+                    <p>Notre nouveau salon ouvre ses portes au cœur de New York, dans le quartier de SoHo.</p>
+                    <span class="date">📅 15 juillet 2026</span>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="img">💎</div>
+                <div class="content">
+                    <h3>1000 styles exclusifs</h3>
+                    <p>Nous atteignons le cap des 1000 styles uniques pour sublimer la beauté de chaque femme.</p>
+                    <span class="date">📅 1 juin 2026</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: NEWSLETTER -->
+    <section style="background: linear-gradient(135deg, #1a1a2e, #0f3460); padding: 4rem 2rem; text-align: center; margin-top: 2rem;">
+        <div style="max-width: 600px; margin: 0 auto;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: white; margin-bottom: 1rem;">
+                📧 Restez <span style="color: var(--gold);">informée</span>
+            </h2>
+            <p style="color: rgba(255,255,255,0.7); margin-bottom: 2rem;">
+                Recevez nos actualités, promotions exclusives et nouveaux styles en avant-première.
+            </p>
+            <form id="newsletterForm" style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+                <input type="email" id="newsletterEmail" placeholder="Votre email" required style="flex: 1; min-width: 200px; padding: 0.8rem 1.2rem; border: 2px solid rgba(255,255,255,0.2); border-radius: 50px; background: rgba(255,255,255,0.05); color: white; font-size: 1rem;">
+                <button type="submit" style="padding: 0.8rem 2rem; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--text-dark); border: none; border-radius: 50px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                    S'abonner
+                </button>
+            </form>
+            <div id="newsletterMessage" style="color: #4CAF50; margin-top: 1rem; display: none;"></div>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
+
+    <script>
+        document.getElementById('newsletterForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('newsletterEmail').value;
+            const msg = document.getElementById('newsletterMessage');
+            msg.style.display = 'block';
+            try {
+                const res = await fetch('/newsletter/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    msg.style.color = '#4CAF50';
+                    msg.textContent = '✅ ' + data.message;
+                    this.reset();
+                } else {
+                    msg.style.color = '#ff1744';
+                    msg.textContent = '❌ ' + data.error;
+                }
+            } catch(e) {
+                msg.style.color = '#ff1744';
+                msg.textContent = '❌ Erreur réseau';
+            }
+        });
+    </script>
+
+    <script src="/js/zoom.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

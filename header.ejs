@@ -1,0 +1,104 @@
+<header class="header-premium">
+    <nav class="nav-premium">
+        <div class="logo">
+            <a href="/">
+                <span class="logo-text">AWA</span>
+                <span class="logo-sub">HAIRCUT DESIGN</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="/services"><i class="fas fa-concierge-bell"></i> Services</a></li>
+            <li><a href="/gallery"><i class="fas fa-images"></i> Galerie</a></li>
+            <li><a href="/booking"><i class="fas fa-calendar-plus"></i> Réservation</a></li>
+            <li><a href="/reviews"><i class="fas fa-star"></i> Avis</a></li>
+            <li><a href="/about"><i class="fas fa-info-circle"></i> À propos</a></li>
+            <li><a href="/pages/category/coupe"><i class="fas fa-cut"></i> Coupes</a></li>
+            <li><a href="/pages/category/couleur"><i class="fas fa-palette"></i> Couleurs</a></li>
+            <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <% if (user) { %>
+                <div class="user-menu">
+                    <span class="user-name">
+                        <i class="fas fa-user-circle"></i> 
+                        <%= user.name %>
+                        <span class="user-role"><%= user.role === 'admin' ? '👑 Admin' : '' %></span>
+                    </span>
+                    <a href="/booking/my-bookings" class="btn-profile" title="Mes réservations">
+                        <i class="fas fa-calendar-check"></i>
+                    </a>
+                    <a href="/auth/profile" class="btn-profile" title="Mon profil">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                    <a href="/auth/logout" class="btn-logout" title="Déconnexion">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </div>
+            <% } else { %>
+                <a href="/auth/login" class="btn-login"><i class="fas fa-user"></i> Connexion</a>
+                <a href="/auth/register" class="btn-register"><i class="fas fa-user-plus"></i> Inscription</a>
+            <% } %>
+            <a href="/booking" class="btn-book">Réserver</a>
+        </div>
+    </nav>
+</header>
+
+<style>
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.05);
+    padding: 0.3rem 0.8rem 0.3rem 1.5rem;
+    border-radius: 50px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.user-name {
+    color: white;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.user-role {
+    color: var(--gold);
+    font-size: 0.7rem;
+    margin-left: 0.3rem;
+}
+
+.btn-profile, .btn-logout {
+    color: #aaa;
+    padding: 0.3rem 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.btn-profile:hover {
+    color: var(--gold);
+    transform: rotate(90deg);
+}
+
+.btn-logout:hover {
+    color: #ff1744;
+}
+
+.btn-register {
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.btn-register:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+}
+</style>

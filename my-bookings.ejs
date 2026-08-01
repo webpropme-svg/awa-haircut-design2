@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <div style="max-width: 1200px; margin: 4rem auto; padding: 0 2rem;">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary-dark);">Mes réservations</h1>
+        <p style="color: #666; margin-bottom: 2rem;">Gérez toutes vos réservations AWA HAIRCUT DESIGN</p>
+
+        <% if (bookings && bookings.length > 0) { %>
+            <div style="display: grid; gap: 1.5rem;">
+                <% bookings.forEach((booking, index) => { %>
+                    <div style="background: white; padding: 1.5rem 2rem; border-radius: 15px; box-shadow: var(--shadow); border-left: 4px solid 
+                        <%= booking.status === 'confirmed' ? '#4CAF50' : 
+                           booking.status === 'pending' ? '#FFA000' : 
+                           booking.status === 'completed' ? '#2196F3' : 
+                           booking.status === 'cancelled' ? '#f44336' : 
+                           booking.status === 'refused' ? '#d50000' : '#888' %>;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                            <div>
+                                <h3 style="font-family: 'Playfair Display', serif; font-size: 1.3rem;"><%= booking.pageTitle %></h3>
+                                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.5rem; color: #666; font-size: 0.9rem;">
+                                    <span><i class="fas fa-calendar"></i> <%= new Date(booking.date).toLocaleDateString() %></span>
+                                    <span><i class="fas fa-clock"></i> <%= booking.time %></span>
+                                    <span><i class="fas fa-user"></i> <%= booking.stylist %></span>
+                                    <span><i class="fas fa-tag"></i> $<%= booking.price %></span>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                                <span style="padding: 0.3rem 1.2rem; border-radius: 50px; font-weight: 600; font-size: 0.85rem;
+                                    <%= booking.status === 'confirmed' ? 'background: #4CAF50; color: white;' : 
+                                       booking.status === 'pending' ? 'background: #FFA000; color: white;' : 
+                                       booking.status === 'completed' ? 'background: #2196F3; color: white;' : 
+                                       booking.status === 'cancelled' ? 'background: #f44336; color: white;' : 
+                                       booking.status === 'refused' ? 'background: #d50000; color: white;' : 
+                                       'background: #888; color: white;' %>">
+                                    <%= booking.status === 'confirmed' ? '✅ Confirmée' : 
+                                       booking.status === 'pending' ? '⏳ En attente' : 
+                                       booking.status === 'completed' ? '📌 Terminée' : 
+                                       booking.status === 'cancelled' ? '❌ Annulée' : 
+                                       booking.status === 'refused' ? '⛔ Refusée' : '📋 ' + booking.status %>
+                                </span>
+                                <% if (booking.status === 'pending' || booking.status === 'confirmed') { %>
+                                    <button onclick="cancelBooking(<%= index %>)" class="admin-btn admin-btn-danger" style="padding: 0.5rem 1.2rem; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">
+                                        <i class="fas fa-times"></i> Annuler
+                                    </button>
+                                <% } %>
+                            </div>
+                        </div>
+                        <% if (booking.message) { %>
+                            <div style="margin-top: 0.8rem; padding: 0.8rem 1rem; background: #f8f8f8; border-radius: 8px; color: #555; font-size: 0.9rem; border-left: 3px solid var(--gold);">
+                                <i class="fas fa-comment" style="color: var(--gold);"></i> <%= booking.message %>
+                            </div>
+                        <% } %>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div style="text-align: center; padding: 4rem; background: white; border-radius: 20px; box-shadow: var(--shadow);">
+                <i class="fas fa-calendar-plus" style="font-size: 4rem; color: #ddd;"></i>
+                <h3 style="font-family: 'Playfair Display', serif; margin-top: 1rem;">Aucune réservation</h3>
+                <p style="color: #888; margin-bottom: 1.5rem;">Vous n'avez pas encore de réservation. Découvrez nos styles !</p>
+                <a href="/gallery" class="btn-hero" style="display: inline-block; padding: 0.8rem 2rem;">Découvrir les styles</a>
+            </div>
+        <% } %>
+    </div>
+
+    <footer class="footer-premium">
+        <div class="footer-bottom">
+            <p>&copy; <%= currentYear %> AWA HAIRCUT DESIGN. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+    async function cancelBooking(index) {
+        if(!confirm('Annuler cette réservation ?')) return;
+        try {
+            const response = await fetch('/booking/cancel/' + index, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const result = await response.json();
+            if(result.success) {
+                alert('✅ Réservation annulée');
+                location.reload();
+            } else {
+                alert('❌ Erreur: ' + result.error);
+            }
+        } catch(error) {
+            alert('Erreur réseau');
+        }
+    }
+    </script>
+</body>
+</html>

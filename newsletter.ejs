@@ -1,0 +1,73 @@
+<%
+const title = 'Newsletter - Admin AWA';
+const pageTitle = '📧 Envoyer une newsletter';
+const currentPage = 'settings';
+%>
+
+<%- include('layout', { 
+    title: title, 
+    pageTitle: pageTitle, 
+    currentPage: currentPage,
+    content: `
+    <div style="background: var(--admin-card); padding: 2rem; border-radius: var(--admin-radius); border: 1px solid var(--admin-border); max-width: 800px;">
+        <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 1.5rem;">✉️ Envoyer une newsletter</h3>
+        <p style="color: var(--admin-text-secondary); margin-bottom: 1.5rem;">Envoyez une newsletter à tous vos abonnés</p>
+        
+        <div id="newsletterStatus" style="margin-bottom: 1rem; padding: 1rem; border-radius: 8px; display: none;"></div>
+        
+        <form id="newsletterForm">
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Objet</label>
+                <input type="text" id="newsletterSubject" required style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);" placeholder="Ex: Nouvelle collection été 2026">
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Message</label>
+                <textarea id="newsletterMessage" rows="8" required style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);" placeholder="Rédigez votre message ici..."></textarea>
+            </div>
+            <button type="submit" class="admin-btn admin-btn-primary" style="padding: 0.8rem 2rem; font-size: 1rem; border: none; cursor: pointer;">
+                <i class="fas fa-paper-plane"></i> Envoyer la newsletter
+            </button>
+        </form>
+    </div>
+
+    <script>
+    document.getElementById('newsletterForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const subject = document.getElementById('newsletterSubject').value;
+        const message = document.getElementById('newsletterMessage').value;
+        const statusDiv = document.getElementById('newsletterStatus');
+        
+        statusDiv.style.display = 'block';
+        statusDiv.style.background = 'rgba(255,193,7,0.1)';
+        statusDiv.style.color = 'var(--admin-warning)';
+        statusDiv.textContent = '⏳ Envoi en cours...';
+        
+        try {
+            const response = await fetch('/admin/newsletter/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ subject, message })
+            });
+            const result = await response.json();
+            
+            if (result.success) {
+                statusDiv.style.background = 'rgba(0,200,83,0.1)';
+                statusDiv.style.color = 'var(--admin-success)';
+                statusDiv.textContent = '✅ ' + result.message;
+                document.getElementById('newsletterSubject').value = '';
+                document.getElementById('newsletterMessage').value = '';
+            } else {
+                statusDiv.style.background = 'rgba(255,23,68,0.1)';
+                statusDiv.style.color = 'var(--admin-danger)';
+                statusDiv.textContent = '❌ ' + result.error;
+            }
+        } catch(error) {
+            statusDiv.style.background = 'rgba(255,23,68,0.1)';
+            statusDiv.style.color = 'var(--admin-danger)';
+            statusDiv.textContent = '❌ Erreur réseau';
+        }
+    });
+    </script>
+    `
+}) %>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#FFB6C1"/>
+  <rect width="800" height="600" fill="url(#grad)" opacity="0.6"/>
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF1493;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <text x="400" y="280" font-family="Playfair Display, serif" font-size="40" fill="white" text-anchor="middle" font-weight="bold">AWA</text>
+  <text x="400" y="330" font-family="Playfair Display, serif" font-size="24" fill="#FFD700" text-anchor="middle">HAIRCUT DESIGN</text>
+  <text x="400" y="380" font-family="Arial" font-size="18" fill="white" text-anchor="middle" opacity="0.8">✨ Style de coiffure ✨</text>
+</svg>

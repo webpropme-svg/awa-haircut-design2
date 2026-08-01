@@ -1,0 +1,65 @@
+<%
+const title = 'Utilisateurs - Admin AWA';
+const pageTitle = '👥 Gestion des utilisateurs';
+const currentPage = 'users';
+const users = typeof locals !== 'undefined' && locals.users ? locals.users : [];
+const userCount = users ? users.length : 0;
+%>
+
+<%- include('layout', { 
+    title: title, 
+    pageTitle: pageTitle, 
+    currentPage: currentPage,
+    pageCount: 0,
+    userCount: userCount,
+    content: `
+    <div class="admin-table-container">
+        <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--admin-border);">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem;">
+                Tous les utilisateurs (${userCount})
+            </h3>
+        </div>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                    <th>Réservations</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${users && users.length > 0 ? users.map(function(u) {
+                    return '<tr>' +
+                        '<td><strong>' + u.name + '</strong></td>' +
+                        '<td>' + u.email + '</td>' +
+                        '<td><span style="background:rgba(212,175,55,0.2);color:var(--admin-primary);padding:0.2rem 0.8rem;border-radius:50px;font-size:0.7rem;">' + (u.role || 'user') + '</span></td>' +
+                        '<td>' + (u.bookings ? u.bookings.length : 0) + '</td>' +
+                        '<td>' + new Date(u.createdAt).toLocaleDateString() + '</td>' +
+                        '<td>' +
+                            '<button onclick="deleteUser(\'' + u._id + '\')" class="admin-btn admin-btn-danger" style="padding:0.2rem 0.6rem;font-size:0.7rem;">🗑️</button>' +
+                        '</td>' +
+                    '</tr>';
+                }).join('') : '<tr><td colspan="6" style="text-align:center;padding:3rem;color:#888;">Aucun utilisateur</td></tr>'}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    async function deleteUser(userId) {
+        if(!confirm('Supprimer cet utilisateur définitivement ?')) return;
+        try {
+            const response = await fetch('/admin/users/' + userId, {
+                method: 'DELETE'
+            });
+            const result = await response.json();
+            if(result.success) location.reload();
+        } catch(error) {
+            alert('Erreur réseau');
+        }
+    }
+    </script>
+    `
+}) %>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <div style="max-width: 1200px; margin: 4rem auto; padding: 0 2rem;">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 3rem; text-align: center; color: var(--primary-dark);">Contactez-nous</h1>
+        <p style="text-align: center; font-size: 1.2rem; color: #666; max-width: 600px; margin: 1rem auto 3rem;">Une question ? Un projet ? Nous sommes là pour vous accompagner.</p>
+
+        <% if (success) { %>
+            <div style="background: #4CAF50; color: white; padding: 1rem 2rem; border-radius: 10px; margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <i class="fas fa-check-circle"></i> <%= success %>
+            </div>
+        <% } %>
+        <% if (error) { %>
+            <div style="background: #f44336; color: white; padding: 1rem 2rem; border-radius: 10px; margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <i class="fas fa-exclamation-circle"></i> <%= error %>
+            </div>
+        <% } %>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;">
+            <div>
+                <h2 style="font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 2rem;">Nos coordonnées</h2>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-map-marker-alt" style="font-size: 2rem; color: var(--gold); width: 50px;"></i>
+                        <div>
+                            <h4 style="font-weight: 600;">Adresse</h4>
+                            <p style="color: #666;">12 rue de la Beauté, 75001 Paris, France</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-phone" style="font-size: 2rem; color: var(--gold); width: 50px;"></i>
+                        <div>
+                            <h4 style="font-weight: 600;">Téléphone</h4>
+                            <p style="color: #666;">+1 212 555 1234</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-envelope" style="font-size: 2rem; color: var(--gold); width: 50px;"></i>
+                        <div>
+                            <h4 style="font-weight: 600;">Email</h4>
+                            <p style="color: #666;">contact@awahaircut.com</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-clock" style="font-size: 2rem; color: var(--gold); width: 50px;"></i>
+                        <div>
+                            <h4 style="font-weight: 600;">Horaires</h4>
+                            <p style="color: #666;">Lun-Sam : 9h - 20h</p>
+                            <p style="color: #666;">Dimanche : 10h - 18h</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 style="font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 2rem;">Envoyez-nous un message</h2>
+                <form action="/contact/send" method="POST" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Nom complet *</label>
+                        <input type="text" name="name" required value="<%= user ? user.name : '' %>" style="width: 100%; padding: 0.8rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Email *</label>
+                        <input type="email" name="email" required value="<%= user ? user.email : '' %>" style="width: 100%; padding: 0.8rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Téléphone</label>
+                        <input type="tel" name="phone" style="width: 100%; padding: 0.8rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Sujet *</label>
+                        <input type="text" name="subject" required style="width: 100%; padding: 0.8rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;" placeholder="Ex: Demande de renseignement">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Message *</label>
+                        <textarea name="message" rows="5" required style="width: 100%; padding: 0.8rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; resize: vertical;" placeholder="Décrivez votre demande..."></textarea>
+                    </div>
+                    <button type="submit" style="padding: 1rem 2rem; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--text-dark); border: none; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">
+                        <i class="fas fa-paper-plane"></i> Envoyer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

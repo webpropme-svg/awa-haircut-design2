@@ -1,0 +1,13 @@
+/* Images de remplacement */
+img {
+    background: linear-gradient(135deg, #FFB6C1, #FF69B4);
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+img[src*="placeholder"] {
+    object-fit: cover;
+}

@@ -1,0 +1,72 @@
+<%
+const title = 'Créer une page - Admin AWA';
+const pageTitle = '📝 Créer une nouvelle page';
+const currentPage = 'pages';
+%>
+
+<%- include('layout', { 
+    title: title, 
+    pageTitle: pageTitle, 
+    currentPage: currentPage,
+    pageCount: 0,
+    userCount: 0,
+    content: `
+    <div style="background: var(--admin-card); padding: 2rem; border-radius: var(--admin-radius); border: 1px solid var(--admin-border); max-width: 800px;">
+        <form action="/admin/pages/create" method="POST">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div>
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Titre *</label>
+                    <input type="text" name="title" required style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                </div>
+                <div>
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Catégorie *</label>
+                    <select name="category" style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                        <option value="coupe">Coupe</option>
+                        <option value="couleur">Couleur</option>
+                        <option value="brushing">Brushing</option>
+                        <option value="coiffage">Coiffage</option>
+                        <option value="traitement">Traitement</option>
+                        <option value="extension">Extension</option>
+                        <option value="mariage">Mariage</option>
+                        <option value="soin">Soin</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+                <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Description *</label>
+                <textarea name="description" rows="2" required style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);"></textarea>
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+                <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Contenu *</label>
+                <textarea name="content" rows="6" required style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);"></textarea>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                <div>
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Prix min ($)</label>
+                    <input type="number" name="priceMin" value="150" style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                </div>
+                <div>
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Prix max ($)</label>
+                    <input type="number" name="priceMax" value="250" style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                </div>
+                <div>
+                    <label style="display: block; color: var(--admin-text-secondary); margin-bottom: 0.3rem;">Durée (minutes)</label>
+                    <input type="number" name="duration" value="45" style="width: 100%; padding: 0.8rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; color: var(--admin-text);">
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                <button type="submit" class="admin-btn admin-btn-primary" style="padding: 0.8rem 2rem; font-size: 1rem; border: none; cursor: pointer;">
+                    <i class="fas fa-plus"></i> Créer la page
+                </button>
+                <a href="/admin/pages" class="admin-btn" style="padding: 0.8rem 2rem; font-size: 1rem; background: var(--admin-border); color: var(--admin-text); text-decoration: none; border-radius: 8px; text-align: center;">
+                    Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+    `
+}) %>

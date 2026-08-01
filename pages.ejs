@@ -1,0 +1,93 @@
+<%
+const title = 'Pages - Admin AWA';
+const pageTitle = '📄 Gestion des pages';
+const currentPage = 'pages';
+const pages = typeof locals !== 'undefined' && locals.pages ? locals.pages : [];
+const pageCount = pages ? pages.length : 0;
+const userCount = typeof locals !== 'undefined' && locals.userCount ? locals.userCount : 0;
+%>
+
+<%- include('layout', { 
+    title: title, 
+    pageTitle: pageTitle, 
+    currentPage: currentPage,
+    pageCount: pageCount,
+    userCount: userCount,
+    content: `
+    <div style="display:flex; justify-content:space-between; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
+        <a href="/admin/pages/create" class="admin-btn admin-btn-primary" style="padding:0.8rem 2rem;">
+            <i class="fas fa-plus"></i> Créer une page
+        </a>
+        <a href="/admin/generate" class="admin-btn admin-btn-success" style="padding:0.8rem 2rem;">
+            <i class="fas fa-sync-alt"></i> Régénérer 1000 pages
+        </a>
+    </div>
+
+    <div class="admin-table-container">
+        <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--admin-border);">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem;">
+                Toutes les pages (${pageCount})
+            </h3>
+        </div>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Catégorie</th>
+                    <th>Prix ($)</th>
+                    <th>Vues</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${pages && pages.length > 0 ? pages.map(function(p) {
+                    return '<tr>' +
+                        '<td>#' + p.pageId + '</td>' +
+                        '<td><strong>' + p.title + '</strong></td>' +
+                        '<td><span style="background:rgba(212,175,55,0.2);color:var(--admin-primary);padding:0.2rem 0.8rem;border-radius:50px;font-size:0.7rem;">' + p.category + '</span></td>' +
+                        '<td>$' + p.price.min + '</td>' +
+                        '<td>' + p.views + '</td>' +
+                        '<td><span class="status ' + (p.isActive ? 'active' : 'inactive') + '">' + (p.isActive ? '✅ Actif' : '❌ Inactif') + '</span></td>' +
+                        '<td>' +
+                            '<a href="/pages/' + p.pageId + '" target="_blank" class="admin-btn admin-btn-primary" style="padding:0.2rem 0.6rem;font-size:0.7rem;">👁️</a> ' +
+                            '<button onclick="togglePage(' + p.pageId + ')" class="admin-btn ' + (p.isActive ? 'admin-btn-danger' : 'admin-btn-success') + '" style="padding:0.2rem 0.6rem;font-size:0.7rem;">' + (p.isActive ? '🔴' : '🟢') + '</button> ' +
+                            '<button onclick="deletePage(' + p.pageId + ')" class="admin-btn admin-btn-danger" style="padding:0.2rem 0.6rem;font-size:0.7rem;">🗑️</button>' +
+                        '</td>' +
+                    '</tr>';
+                }).join('') : '<tr><td colspan="7" style="text-align:center;padding:3rem;color:#888;">Aucune page trouvée</td></tr>'}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    async function togglePage(pageId) {
+        if(!confirm('Changer le statut de cette page ?')) return;
+        try {
+            const response = await fetch('/admin/pages/' + pageId + '/toggle', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const result = await response.json();
+            if(result.success) location.reload();
+        } catch(error) {
+            alert('Erreur réseau');
+        }
+    }
+
+    async function deletePage(pageId) {
+        if(!confirm('Supprimer cette page définitivement ?')) return;
+        try {
+            const response = await fetch('/admin/pages/' + pageId, {
+                method: 'DELETE'
+            });
+            const result = await response.json();
+            if(result.success) location.reload();
+        } catch(error) {
+            alert('Erreur réseau');
+        }
+    }
+    </script>
+    `
+}) %>

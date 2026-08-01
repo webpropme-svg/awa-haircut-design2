@@ -1,0 +1,39 @@
+<%
+const title = 'Catégories - Admin AWA';
+const pageTitle = '🏷️ Gestion des catégories';
+const currentPage = 'categories';
+const categories = typeof locals !== 'undefined' && locals.categories ? locals.categories : [];
+%>
+
+<%- include('layout', { 
+    title: title, 
+    pageTitle: pageTitle, 
+    currentPage: currentPage,
+    pageCount: 0,
+    userCount: 0,
+    content: `
+    <div class="admin-table-container">
+        <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--admin-border);">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem;">📂 Toutes les catégories</h3>
+        </div>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Nombre de pages</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${categories && categories.length > 0 ? categories.map(function(cat) {
+                    return '<tr>' +
+                        '<td><strong style="color:var(--admin-primary);">' + cat._id.charAt(0).toUpperCase() + cat._id.slice(1) + '</strong></td>' +
+                        '<td>' + cat.count + '</td>' +
+                        '<td><a href="/pages/category/' + cat._id + '" target="_blank" class="admin-btn admin-btn-primary" style="padding:0.2rem 0.8rem;font-size:0.7rem;">👁️ Voir</a></td>' +
+                    '</tr>';
+                }).join('') : '<tr><td colspan="3" style="text-align:center;padding:3rem;color:#888;">Aucune catégorie</td></tr>'}
+            </tbody>
+        </table>
+    </div>
+    `
+}) %>

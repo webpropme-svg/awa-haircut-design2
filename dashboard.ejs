@@ -1,0 +1,205 @@
+<%
+const title = 'Dashboard - Admin AWA';
+const pageTitle = 'Tableau de bord';
+const currentPage = 'dashboard';
+const pageCount = typeof locals !== 'undefined' && locals.pageCount ? locals.pageCount : 0;
+const userCount = typeof locals !== 'undefined' && locals.userCount ? locals.userCount : 0;
+const totalViews = typeof locals !== 'undefined' && locals.totalViews ? locals.totalViews : 0;
+const bookingsCount = typeof locals !== 'undefined' && locals.bookingsCount ? locals.bookingsCount : 0;
+const totalRevenue = typeof locals !== 'undefined' && locals.totalRevenue ? locals.totalRevenue : 0;
+const recentPages = typeof locals !== 'undefined' && locals.recentPages ? locals.recentPages : [];
+const allBookings = typeof locals !== 'undefined' && locals.allBookings ? locals.allBookings : [];
+%>
+
+<%- include('layout', { 
+    title: title, 
+    pageTitle: pageTitle, 
+    currentPage: currentPage,
+    pageCount: pageCount,
+    userCount: userCount,
+    unreadCount: 0,
+    content: `
+    <!-- Statistiques -->
+    <div class="admin-stats">
+        <div class="admin-stat-card">
+            <div class="stat-icon gold">📄</div>
+            <div class="stat-number">${pageCount}</div>
+            <div class="stat-label">Pages totales</div>
+            <div class="stat-change up">↑ 100%</div>
+        </div>
+        <div class="admin-stat-card">
+            <div class="stat-icon blue">👥</div>
+            <div class="stat-number">${userCount}</div>
+            <div class="stat-label">Utilisateurs</div>
+            <div class="stat-change up">↑ 15%</div>
+        </div>
+        <div class="admin-stat-card">
+            <div class="stat-icon green">👁️</div>
+            <div class="stat-number">${totalViews}</div>
+            <div class="stat-label">Vues totales</div>
+            <div class="stat-change up">↑ 23%</div>
+        </div>
+        <div class="admin-stat-card">
+            <div class="stat-icon red">⭐</div>
+            <div class="stat-number">4.9</div>
+            <div class="stat-label">Note moyenne</div>
+            <div class="stat-change up">↑ 0.2</div>
+        </div>
+        <div class="admin-stat-card">
+            <div class="stat-icon gold">📅</div>
+            <div class="stat-number">${bookingsCount}</div>
+            <div class="stat-label">Réservations</div>
+            <div class="stat-change up">↑ 8%</div>
+        </div>
+        <div class="admin-stat-card">
+            <div class="stat-icon blue">💰</div>
+            <div class="stat-number">$${totalRevenue}</div>
+            <div class="stat-label">Revenus totaux</div>
+            <div class="stat-change up">↑ 12%</div>
+        </div>
+    </div>
+
+    <!-- Graphiques -->
+    <div class="admin-charts">
+        <div class="admin-chart-box">
+            <h3>📊 Évolution des vues</h3>
+            <canvas id="viewsChart"></canvas>
+        </div>
+        <div class="admin-chart-box">
+            <h3>📈 Pages par catégorie</h3>
+            <canvas id="categoryChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Dernières réservations -->
+    <div class="admin-table-container">
+        <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--admin-border); display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem;">📅 Dernières réservations</h3>
+            <a href="/admin/bookings" class="admin-btn admin-btn-primary">Voir tout</a>
+        </div>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Client</th>
+                    <th>Style</th>
+                    <th>Date</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${allBookings && allBookings.length > 0 ? allBookings.map(function(b) {
+                    const statusLabels = {
+                        'pending': '<span class="status pending">⏳ En attente</span>',
+                        'confirmed': '<span class="status active">✅ Confirmée</span>',
+                        'completed': '<span class="status" style="background:#2196F3;color:white;">📌 Terminée</span>',
+                        'cancelled': '<span class="status inactive">❌ Annulée</span>',
+                        'refused': '<span class="status" style="background:#d50000;color:white;">⛔ Refusée</span>'
+                    };
+                    return '<tr><td><strong>' + b.userName + '</strong></td><td>' + b.pageTitle + '</td><td>' + new Date(b.date).toLocaleDateString() + '</td><td>' + (statusLabels[b.status] || statusLabels.pending) + '</td></tr>';
+                }).join('') : '<tr><td colspan="4" style="text-align:center;padding:2rem;color:#888;">Aucune réservation</td></tr>'}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Dernières pages -->
+    <div class="admin-table-container">
+        <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--admin-border); display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem;">📄 Dernières pages</h3>
+            <a href="/admin/pages" class="admin-btn admin-btn-primary">Voir tout</a>
+        </div>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Catégorie</th>
+                    <th>Prix</th>
+                    <th>Vues</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${recentPages && recentPages.length > 0 ? recentPages.map(function(page) {
+                    return '<tr><td>#' + page.pageId + '</td><td>' + page.title + '</td><td>' + page.category + '</td><td>$' + page.price.min + '</td><td>' + page.views + '</td><td><span class="status ' + (page.isActive ? 'active' : 'inactive') + '">' + (page.isActive ? 'Actif' : 'Inactif') + '</span></td></tr>';
+                }).join('') : '<tr><td colspan="6" style="text-align:center;padding:2rem;color:#888;">Aucune page</td></tr>'}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Actions rapides -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        <div style="background: var(--admin-card); padding: 1.5rem; border-radius: var(--admin-radius); border: 1px solid var(--admin-border); text-align: center;">
+            <i class="fas fa-plus-circle" style="font-size: 2rem; color: var(--admin-primary);"></i>
+            <h4 style="font-family: 'Playfair Display', serif;">Ajouter</h4>
+            <a href="/admin/pages/create" class="admin-btn admin-btn-primary" style="margin-top:0.5rem;">Créer</a>
+        </div>
+        <div style="background: var(--admin-card); padding: 1.5rem; border-radius: var(--admin-radius); border: 1px solid var(--admin-border); text-align: center;">
+            <i class="fas fa-sync-alt" style="font-size: 2rem; color: var(--admin-success);"></i>
+            <h4 style="font-family: 'Playfair Display', serif;">Régénérer</h4>
+            <a href="/admin/generate" class="admin-btn admin-btn-success" style="margin-top:0.5rem;">1000 pages</a>
+        </div>
+        <div style="background: var(--admin-card); padding: 1.5rem; border-radius: var(--admin-radius); border: 1px solid var(--admin-border); text-align: center;">
+            <i class="fas fa-database" style="font-size: 2rem; color: var(--admin-info);"></i>
+            <h4 style="font-family: 'Playfair Display', serif;">Backup</h4>
+            <a href="/admin/backup" class="admin-btn admin-btn-primary" style="margin-top:0.5rem; background:var(--admin-info);">Exporter</a>
+        </div>
+        <div style="background: var(--admin-card); padding: 1.5rem; border-radius: var(--admin-radius); border: 1px solid var(--admin-border); text-align: center;">
+            <i class="fas fa-envelope" style="font-size: 2rem; color: var(--admin-warning);"></i>
+            <h4 style="font-family: 'Playfair Display', serif;">Newsletter</h4>
+            <a href="/admin/newsletter" class="admin-btn admin-btn-primary" style="margin-top:0.5rem; background:var(--admin-warning); color:#000;">Envoyer</a>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx1 = document.getElementById('viewsChart');
+        if(ctx1) {
+            new Chart(ctx1.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août'],
+                    datasets: [{
+                        label: 'Vues',
+                        data: [1200, 1900, 1500, 2400, 2100, 2800, 3200, 3800],
+                        borderColor: '#D4AF37',
+                        backgroundColor: 'rgba(212,175,55,0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#8888aa' } } },
+                    scales: {
+                        y: { ticks: { color: '#8888aa' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        x: { ticks: { color: '#8888aa' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                    }
+                }
+            });
+        }
+
+        const ctx2 = document.getElementById('categoryChart');
+        if(ctx2) {
+            new Chart(ctx2.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Coupe', 'Couleur', 'Brushing', 'Coiffage', 'Traitement', 'Extension', 'Mariage', 'Soin'],
+                    datasets: [{
+                        data: [150, 130, 120, 110, 100, 90, 80, 70],
+                        backgroundColor: ['#D4AF37', '#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DFE6E9']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#8888aa', padding: 15 } }
+                    }
+                }
+            });
+        }
+    });
+    </script>
+    `
+}) %>

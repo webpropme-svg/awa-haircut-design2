@@ -1,0 +1,84 @@
+<%
+const title = 'Réservations - Admin AWA';
+const pageTitle = '📅 Gestion des réservations';
+const currentPage = 'bookings';
+// Récupérer les bookings depuis les variables locales
+const bookingsData = typeof bookings !== 'undefined' ? bookings : [];
+%>
+
+<%- include('layout', { 
+    title: title, 
+    pageTitle: pageTitle, 
+    currentPage: currentPage,
+    content: `
+    <div class="admin-table-container">
+        <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--admin-border);">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem;">
+                📋 Toutes les réservations (${bookingsData.length})
+            </h3>
+        </div>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Client</th>
+                    <th>Style</th>
+                    <th>Date</th>
+                    <th>Heure</th>
+                    <th>Prix</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${bookingsData.length > 0 ? bookingsData.map(function(b, idx) {
+                    const statusLabels = {
+                        'pending': '<span class="status pending">⏳ En attente</span>',
+                        'confirmed': '<span class="status active">✅ Confirmée</span>',
+                        'completed': '<span class="status" style="background:#2196F3;color:white;">📌 Terminée</span>',
+                        'cancelled': '<span class="status inactive">❌ Annulée</span>',
+                        'refused': '<span class="status" style="background:#d50000;color:white;">⛔ Refusée</span>'
+                    };
+                    const status = b.status || 'pending';
+                    return '<tr>' +
+                        '<td><strong>' + (b.userName || 'Inconnu') + '</strong><br><small style="color:#888;">' + (b.userEmail || '') + '</small></td>' +
+                        '<td><strong>' + (b.pageTitle || 'Style inconnu') + '</strong></td>' +
+                        '<td>' + (b.date ? new Date(b.date).toLocaleDateString() : '') + '</td>' +
+                        '<td>' + (b.time || '') + '</td>' +
+                        '<td>$' + (b.price || 0) + '</td>' +
+                        '<td>' + (statusLabels[status] || statusLabels.pending) + '</td>' +
+                        '<td>' +
+                            (status === 'pending' ? '<button onclick="updateBookingStatus(\'' + b.userId + '\',' + idx + ',\'confirmed\')" class="admin-btn admin-btn-success" style="padding:0.2rem 0.6rem;font-size:0.7rem;cursor:pointer;border:none;border-radius:4px;" title="Confirmer">✅</button> ' : '') +
+                            (status === 'pending' ? '<button onclick="updateBookingStatus(\'' + b.userId + '\',' + idx + ',\'pending\')" class="admin-btn admin-btn-primary" style="padding:0.2rem 0.6rem;font-size:0.7rem;cursor:pointer;border:none;border-radius:4px;" title="En attente">⏳</button> ' : '') +
+                            (status === 'pending' || status === 'confirmed' ? '<button onclick="updateBookingStatus(\'' + b.userId + '\',' + idx + ',\'refused\')" class="admin-btn admin-btn-danger" style="padding:0.2rem 0.6rem;font-size:0.7rem;cursor:pointer;border:none;border-radius:4px;" title="Refuser">⛔</button> ' : '') +
+                            (status === 'confirmed' ? '<button onclick="updateBookingStatus(\'' + b.userId + '\',' + idx + ',\'completed\')" class="admin-btn admin-btn-primary" style="padding:0.2rem 0.6rem;font-size:0.7rem;cursor:pointer;border:none;border-radius:4px;" title="Terminer">📌</button> ' : '') +
+                            (status === 'pending' || status === 'confirmed' ? '<button onclick="updateBookingStatus(\'' + b.userId + '\',' + idx + ',\'cancelled\')" class="admin-btn admin-btn-danger" style="padding:0.2rem 0.6rem;font-size:0.7rem;cursor:pointer;border:none;border-radius:4px;" title="Annuler">❌</button>' : '') +
+                        '</td>' +
+                    '</tr>';
+                }).join('') : '<tr><td colspan="7" style="text-align:center;padding:3rem;color:#888;">Aucune réservation trouvée</td></tr>'}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    async function updateBookingStatus(userId, index, status) {
+        if(!confirm('Changer le statut de cette réservation ?')) return;
+        try {
+            const response = await fetch('/admin/bookings/' + userId + '/' + index + '/status', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: status })
+            });
+            const result = await response.json();
+            if(result.success) {
+                alert('✅ Statut mis à jour');
+                location.reload();
+            } else {
+                alert('❌ Erreur: ' + (result.error || 'Inconnue'));
+            }
+        } catch(error) {
+            alert('Erreur réseau');
+        }
+    }
+    </script>
+    `
+}) %>

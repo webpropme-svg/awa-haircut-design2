@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presse - AWA HAIRCUT DESIGN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header-premium">
+        <nav class="nav-premium">
+            <div class="logo"><a href="/"><span class="logo-text">AWA</span><span class="logo-sub">HAIRCUT DESIGN</span></a></div>
+            <ul class="nav-links">
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/gallery">Galerie</a></li>
+                <li><a href="/booking">Réservation</a></li>
+                <li><a href="/about">À propos</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="/auth/login" class="btn-login"><i class="fas fa-user"></i> Connexion</a>
+                <a href="/booking" class="btn-book">Réserver</a>
+            </div>
+        </nav>
+    </header>
+
+    <div style="max-width: 1200px; margin: 4rem auto; padding: 0 2rem; text-align: center;">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--primary-dark);">Presse</h1>
+        <p style="color: #666; max-width: 600px; margin: 1rem auto 3rem;">AWA HAIRCUT DESIGN dans les médias.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--shadow);">
+                <h3 style="font-family: 'Playfair Display', serif;">Elle Magazine</h3>
+                <p style="color: #666;">"Le nouveau temple de la coiffure parisienne"</p>
+            </div>
+            <div style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--shadow);">
+                <h3 style="font-family: 'Playfair Display', serif;">Vogue</h3>
+                <p style="color: #666;">"L'innovation capillaire au féminin"</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-premium">
+        <div class="footer-bottom"><p>&copy; <%= new Date().getFullYear() %> AWA HAIRCUT DESIGN. Tous droits réservés.</p></div>
+    </footer>
+</body>
+</html>

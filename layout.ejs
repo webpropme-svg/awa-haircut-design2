@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+    <aside class="admin-sidebar">
+        <a href="/admin" class="admin-logo">
+            AWA
+            <span>HAIRCUT DESIGN</span>
+        </a>
+        <nav class="admin-nav">
+            <a href="/admin" class="admin-nav-item <%= currentPage === 'dashboard' ? 'active' : '' %>">
+                <i class="fas fa-chart-pie"></i><span>Tableau de bord</span>
+            </a>
+            <a href="/admin/pages" class="admin-nav-item <%= currentPage === 'pages' ? 'active' : '' %>">
+                <i class="fas fa-file-alt"></i><span>Pages</span>
+            </a>
+            <a href="/admin/users" class="admin-nav-item <%= currentPage === 'users' ? 'active' : '' %>">
+                <i class="fas fa-users"></i><span>Utilisateurs</span>
+            </a>
+            <a href="/admin/bookings" class="admin-nav-item <%= currentPage === 'bookings' ? 'active' : '' %>">
+                <i class="fas fa-calendar-check"></i><span>Réservations</span>
+            </a>
+            <a href="/admin/reviews" class="admin-nav-item <%= currentPage === 'reviews' ? 'active' : '' %>">
+                <i class="fas fa-star"></i><span>Avis</span>
+            </a>
+            <a href="/admin/categories" class="admin-nav-item <%= currentPage === 'categories' ? 'active' : '' %>">
+                <i class="fas fa-tags"></i><span>Catégories</span>
+            </a>
+            <a href="/admin/contacts" class="admin-nav-item <%= currentPage === 'contacts' ? 'active' : '' %>">
+                <i class="fas fa-envelope"></i><span>Messages</span>
+            </a>
+            <hr class="admin-nav-divider">
+            <a href="/admin/settings" class="admin-nav-item <%= currentPage === 'settings' ? 'active' : '' %>">
+                <i class="fas fa-cog"></i><span>Paramètres</span>
+            </a>
+            <a href="/" class="admin-nav-item"><i class="fas fa-globe"></i><span>Voir le site</span></a>
+            <a href="/auth/logout" class="admin-nav-item"><i class="fas fa-sign-out-alt"></i><span>Déconnexion</span></a>
+        </nav>
+        <div class="admin-footer">
+            <p>AWA HAIRCUT DESIGN v1.0</p>
+            <p style="font-size: 0.7rem; margin-top: 0.2rem;">© 2026 Tous droits réservés</p>
+        </div>
+    </aside>
+
+    <main class="admin-main">
+        <header class="admin-header">
+            <div>
+                <h1><%= pageTitle %><small>Panel d'administration</small></h1>
+            </div>
+            <div class="admin-user">
+                <div class="user-info">
+                    <div class="user-name">Admin AWA</div>
+                    <div class="user-role">Super Admin</div>
+                </div>
+                <img src="https://picsum.photos/seed/admin/45/45" alt="Admin">
+            </div>
+        </header>
+
+        <!-- CONTENU -->
+        <%- content %>
+
+        <div style="text-align: center; color: var(--admin-text-secondary); padding: 2rem 0; font-size: 0.8rem; border-top: 1px solid var(--admin-border); margin-top: 2rem;">
+            <p>AWA HAIRCUT DESIGN — Dashboard Premium v1.0</p>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function confirmAction(msg) {
+            return confirm(msg || 'Confirmer cette action ?');
+        }
+    </script>
+</body>
+</html>

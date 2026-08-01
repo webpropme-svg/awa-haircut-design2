@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header-premium">
+        <nav class="nav-premium">
+            <div class="logo">
+                <a href="/">
+                    <span class="logo-text">AWA</span>
+                    <span class="logo-sub">HAIRCUT DESIGN</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/gallery">Galerie</a></li>
+                <li><a href="/booking">Réservation</a></li>
+                <li><a href="/about">À propos</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="/auth/login" class="btn-login"><i class="fas fa-user"></i> Connexion</a>
+                <a href="/booking" class="btn-book">Réserver</a>
+            </div>
+        </nav>
+    </header>
+
+    <div style="max-width: 1400px; margin: 4rem auto; padding: 0 2rem;">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--primary-dark); text-align: center;">
+            Résultats pour : "<%= query %>"
+        </h1>
+        <p style="text-align: center; color: #666; margin-bottom: 3rem;"><%= pages ? pages.length : 0 %> résultat(s) trouvé(s)</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+            <% if (pages && pages.length > 0) { %>
+                <% pages.forEach(page => { %>
+                    <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+                        <a href="/pages/<%= page.pageId %>" style="text-decoration: none; color: inherit;">
+                            <div style="height: 250px; overflow: hidden;">
+                                <img src="<%= page.images[0]?.url || '/images/placeholder.jpg' %>" alt="<%= page.title %>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                            </div>
+                            <div style="padding: 1.5rem;">
+                                <h3 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.5rem;"><%= page.title %></h3>
+                                <p style="color: #666; font-size: 0.9rem;"><%= page.description.substring(0, 80) %>...</p>
+                                <div style="display: flex; gap: 1rem; font-size: 0.8rem; color: #888; margin-top: 0.5rem;">
+                                    <span><i class="fas fa-tag" style="color: var(--primary);"></i> €<%= page.price.min %></span>
+                                    <span><i class="fas fa-clock" style="color: var(--primary);"></i> <%= page.duration %> min</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p style="text-align: center; grid-column: 1 / -1; color: #666;">Aucun résultat trouvé pour "<%= query %>"</p>
+            <% } %>
+        </div>
+    </div>
+
+    <footer class="footer-premium">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>AWA HAIRCUT DESIGN</h4>
+                <p>L'excellence capillaire depuis 2024</p>
+            </div>
+            <div class="footer-section">
+                <h5>Services</h5>
+                <a href="/pages/category/coupe">Coupes</a>
+                <a href="/pages/category/couleur">Couleurs</a>
+                <a href="/pages/category/brushing">Brushing</a>
+            </div>
+            <div class="footer-section">
+                <h5>À propos</h5>
+                <a href="/about">Notre histoire</a>
+                <a href="/stylists">Nos stylistes</a>
+            </div>
+            <div class="footer-section">
+                <h5>Contact</h5>
+                <p>+33 1 23 45 67 89</p>
+                <p>contact@awahaircut.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <%= currentYear %> AWA HAIRCUT DESIGN. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/images.css">
+    <style>
+        .services-hero {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .services-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212,175,55,0.15), transparent 60%);
+        }
+        .services-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        .services-hero h1 span {
+            color: var(--gold);
+        }
+        .services-hero p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 1rem auto 0;
+            position: relative;
+            z-index: 1;
+        }
+        .services-grid {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            border-color: var(--gold);
+        }
+        .service-card:hover::before {
+            opacity: 1;
+        }
+        .service-card .icon {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .service-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+        }
+        .service-card p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.2rem;
+        }
+        .service-card .meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+            color: #888;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 1rem;
+        }
+        .service-card .meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .service-card .meta i {
+            color: var(--gold);
+        }
+        .service-card .btn-service {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.6rem 1.8rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--text-dark);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .service-card .btn-service:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(212,175,55,0.3);
+        }
+        .services-cta {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .services-cta h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: white;
+        }
+        .services-cta h2 span {
+            color: var(--gold);
+        }
+        .services-cta p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 1rem auto 2rem;
+        }
+        .services-cta .btn-cta {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--text-dark);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        .services-cta .btn-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(212,175,55,0.3);
+        }
+        @media (max-width: 768px) {
+            .services-hero h1 { font-size: 2.5rem; }
+            .services-grid { grid-template-columns: 1fr; }
+            .service-card { padding: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <section class="services-hero">
+        <h1>Nos <span>Services</span></h1>
+        <p>Des prestations d'exception pour sublimer votre beauté avec expertise et élégance</p>
+    </section>
+
+    <section class="services-grid">
+        <% if (services && services.length > 0) { %>
+            <% services.forEach(service => { %>
+                <div class="service-card">
+                    <span class="icon"><i class="fas <%= service.icon %>"></i></span>
+                    <h3><%= service.title %></h3>
+                    <p><%= service.description %></p>
+                    <div class="meta">
+                        <span><i class="fas fa-tag"></i> <%= service.price %></span>
+                        <span><i class="fas fa-clock"></i> <%= service.duration %></span>
+                    </div>
+                    <a href="/booking" class="btn-service">Réserver</a>
+                </div>
+            <% }) %>
+        <% } %>
+    </section>
+
+    <section class="services-cta">
+        <h2>Prête à <span>vous sublimer</span> ?</h2>
+        <p>Découvrez l'excellence capillaire signée AWA HAIRCUT DESIGN. Réservez votre rendez-vous dès maintenant.</p>
+        <a href="/booking" class="btn-cta">📅 Réserver un rendez-vous</a>
+    </section>
+
+    <%- include('partials/footer') %>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
