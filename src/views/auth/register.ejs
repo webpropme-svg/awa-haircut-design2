@@ -9,29 +9,22 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <header class="header-premium">
-        <nav class="nav-premium">
-            <div class="logo">
-                <a href="/">
-                    <span class="logo-text">AWA</span>
-                    <span class="logo-sub">HAIRCUT DESIGN</span>
-                </a>
-            </div>
-            <ul class="nav-links">
-                <li><a href="/">Accueil</a></li>
-                <li><a href="/gallery">Galerie</a></li>
-                <li><a href="/booking">Réservation</a></li>
-                <li><a href="/about">À propos</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-            <div class="nav-actions">
-                <a href="/auth/login" class="btn-login"><i class="fas fa-user"></i> Connexion</a>
-                <a href="/booking" class="btn-book">Réserver</a>
-            </div>
-        </nav>
-    </header>
+    <%- include('../partials/header') %>
 
     <div style="max-width: 500px; margin: 4rem auto; padding: 0 2rem;">
+        <% if (success) { %>
+            <div style="background: #4CAF50; color: white; padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; border-left: 4px solid #2E7D32;">
+                <i class="fas fa-check-circle" style="font-size: 1.5rem;"></i>
+                <span><%= success %></span>
+            </div>
+        <% } %>
+        <% if (error) { %>
+            <div style="background: #f44336; color: white; padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; border-left: 4px solid #c62828;">
+                <i class="fas fa-exclamation-circle" style="font-size: 1.5rem;"></i>
+                <span><%= error %></span>
+            </div>
+        <% } %>
+
         <div style="background: white; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow);">
             <h1 style="font-family: 'Playfair Display', serif; font-size: 2rem; text-align: center; color: var(--primary-dark);">Inscription</h1>
             <p style="text-align: center; color: #666; margin-bottom: 2rem;">Créez votre compte AWA HAIRCUT</p>
@@ -46,6 +39,10 @@
                     <input type="email" name="email" required style="width: 100%; padding: 0.8rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
                 </div>
                 <div>
+                    <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Téléphone</label>
+                    <input type="tel" name="phone" style="width: 100%; padding: 0.8rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                </div>
+                <div>
                     <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Mot de passe</label>
                     <input type="password" name="password" required style="width: 100%; padding: 0.8rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
                 </div>
@@ -58,10 +55,6 @@
         </div>
     </div>
 
-    <footer class="footer-premium">
-        <div class="footer-bottom">
-            <p>&copy; <%= currentYear %> AWA HAIRCUT DESIGN. Tous droits réservés.</p>
-        </div>
-    </footer>
+    <%- include('../partials/footer') %>
 </body>
 </html>

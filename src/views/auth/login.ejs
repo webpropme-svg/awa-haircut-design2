@@ -12,7 +12,6 @@
     <%- include('../partials/header') %>
 
     <div style="max-width: 500px; margin: 4rem auto; padding: 0 2rem;">
-        <!-- Messages d'alerte -->
         <% if (success) { %>
             <div style="background: #4CAF50; color: white; padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; border-left: 4px solid #2E7D32;">
                 <i class="fas fa-check-circle" style="font-size: 1.5rem;"></i>
@@ -48,10 +47,6 @@
         </div>
     </div>
 
-    <footer class="footer-premium">
-        <div class="footer-bottom">
-            <p>&copy; <%= currentYear %> AWA HAIRCUT DESIGN. Tous droits réservés.</p>
-        </div>
-    </footer>
+    <%- include('../partials/footer') %>
 </body>
 </html>
