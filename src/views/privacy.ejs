@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confidentialité - AWA HAIRCUT DESIGN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .privacy-hero {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .privacy-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212,175,55,0.15), transparent 60%);
+        }
+        .privacy-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        .privacy-hero h1 span { color: var(--gold); }
+        .privacy-hero p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 1rem auto 0;
+            position: relative;
+            z-index: 1;
+        }
+        .privacy-section {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .privacy-block {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--gold);
+        }
+        .privacy-block h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+        }
+        .privacy-block p, .privacy-block li {
+            color: #555;
+            line-height: 1.8;
+        }
+        .privacy-block ul { padding-left: 1.5rem; }
+        .privacy-block li { margin-bottom: 0.5rem; }
+        .privacy-block .last-updated {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <section class="privacy-hero">
+        <h1>Politique de <span>Confidentialité</span></h1>
+        <p>Nous protégeons vos données avec la plus grande rigueur</p>
+    </section>
+
+    <section class="privacy-section">
+        <div class="privacy-block">
+            <h2>🔒 Collecte des données</h2>
+            <p>Nous collectons les informations que vous nous fournissez lors de :</p>
+            <ul>
+                <li>La création de votre compte client</li>
+                <li>La réservation d'un rendez-vous</li>
+                <li>L'envoi d'un message via le formulaire de contact</li>
+                <li>L'inscription à notre newsletter</li>
+            </ul>
+            <p>Ces données incluent votre nom, email, numéro de téléphone et préférences de style.</p>
+        </div>
+
+        <div class="privacy-block">
+            <h2>🛡️ Utilisation des données</h2>
+            <p>Vos données sont utilisées pour :</p>
+            <ul>
+                <li>Gérer vos réservations et rendez-vous</li>
+                <li>Vous envoyer des confirmations et rappels</li>
+                <li>Vous informer des promotions et nouveautés</li>
+                <li>Améliorer nos services et votre expérience</li>
+            </ul>
+        </div>
+
+        <div class="privacy-block">
+            <h2>🔐 Sécurité des données</h2>
+            <p>Nous mettons en œuvre des mesures de sécurité avancées pour protéger vos informations :</p>
+            <ul>
+                <li>Chiffrement SSL/TLS pour toutes les transmissions</li>
+                <li>Stockage sécurisé des mots de passe (hashés)</li>
+                <li>Accès restreint aux données personnelles</li>
+                <li>Audits de sécurité réguliers</li>
+            </ul>
+        </div>
+
+        <div class="privacy-block">
+            <h2>📧 Newsletter et communications</h2>
+            <p>Vous pouvez vous désabonner à tout moment via le lien présent dans chaque email. Vos données ne sont jamais partagées avec des tiers à des fins commerciales.</p>
+        </div>
+
+        <div class="privacy-block">
+            <h2>🍪 Cookies</h2>
+            <p>Nous utilisons des cookies pour améliorer votre expérience :</p>
+            <ul>
+                <li>Cookies de session pour maintenir votre connexion</li>
+                <li>Cookies de préférences pour mémoriser vos choix</li>
+                <li>Cookies analytiques pour améliorer nos services</li>
+            </ul>
+            <p>Vous pouvez contrôler l'utilisation des cookies via les paramètres de votre navigateur.</p>
+        </div>
+
+        <div class="privacy-block">
+            <h2>📋 Vos droits</h2>
+            <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+            <ul>
+                <li>Droit d'accès à vos données</li>
+                <li>Droit de rectification</li>
+                <li>Droit à l'effacement</li>
+                <li>Droit d'opposition</li>
+                <li>Droit à la portabilité des données</li>
+            </ul>
+            <p>Pour exercer ces droits, contactez-nous à : <strong>contact@awahaircut.com</strong></p>
+        </div>
+
+        <div class="privacy-block">
+            <h2>📅 Modifications</h2>
+            <p>Cette politique de confidentialité peut être mise à jour. Nous vous informerons de tout changement significatif via notre site ou par email.</p>
+            <p class="last-updated">Dernière mise à jour : 1er août 2026</p>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

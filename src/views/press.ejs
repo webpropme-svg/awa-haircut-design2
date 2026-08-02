@@ -4,45 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Presse - AWA HAIRCUT DESIGN</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .press-hero {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .press-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212,175,55,0.15), transparent 60%);
+        }
+        .press-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        .press-hero h1 span { color: var(--gold); }
+        .press-hero p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 1rem auto 0;
+            position: relative;
+            z-index: 1;
+        }
+        .press-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .press-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .press-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--gold);
+            transition: all 0.3s ease;
+        }
+        .press-card:hover { transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+        .press-card .icon { font-size: 3rem; color: var(--gold); display: block; margin-bottom: 1rem; }
+        .press-card h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+        .press-card .source { color: var(--gold); font-weight: 600; font-size: 0.9rem; }
+        .press-card p { color: #555; line-height: 1.8; margin: 0.5rem 0; }
+        .press-card .date { color: #aaa; font-size: 0.8rem; }
+        .press-card .btn-lire {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .press-card .btn-lire:hover { color: var(--gold); }
+        .press-cta {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 20px;
+            margin-top: 2rem;
+        }
+        .press-cta h2 { font-family: 'Playfair Display', serif; color: white; font-size: 2.5rem; }
+        .press-cta h2 span { color: var(--gold); }
+        .press-cta p { color: rgba(255,255,255,0.7); max-width: 600px; margin: 1rem auto 2rem; }
+        .press-cta .btn-contact {
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--text-dark);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .press-cta .btn-contact:hover { transform: scale(1.05); box-shadow: 0 10px 40px rgba(212,175,55,0.3); }
+    </style>
 </head>
 <body>
-    <header class="header-premium">
-        <nav class="nav-premium">
-            <div class="logo"><a href="/"><span class="logo-text">AWA</span><span class="logo-sub">HAIRCUT DESIGN</span></a></div>
-            <ul class="nav-links">
-                <li><a href="/">Accueil</a></li>
-                <li><a href="/gallery">Galerie</a></li>
-                <li><a href="/booking">Réservation</a></li>
-                <li><a href="/about">À propos</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-            <div class="nav-actions">
-                <a href="/auth/login" class="btn-login"><i class="fas fa-user"></i> Connexion</a>
-                <a href="/booking" class="btn-book">Réserver</a>
-            </div>
-        </nav>
-    </header>
+    <%- include('partials/header') %>
 
-    <div style="max-width: 1200px; margin: 4rem auto; padding: 0 2rem; text-align: center;">
-        <h1 style="font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--primary-dark);">Presse</h1>
-        <p style="color: #666; max-width: 600px; margin: 1rem auto 3rem;">AWA HAIRCUT DESIGN dans les médias.</p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-            <div style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--shadow);">
-                <h3 style="font-family: 'Playfair Display', serif;">Elle Magazine</h3>
-                <p style="color: #666;">"Le nouveau temple de la coiffure parisienne"</p>
+    <section class="press-hero">
+        <h1>AWA dans la <span>Presse</span></h1>
+        <p>Découvrez ce que les médias disent de notre salon d'exception</p>
+    </section>
+
+    <section class="press-section">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; margin-bottom: 3rem;">
+            📰 Derniers articles
+        </h2>
+
+        <div class="press-grid">
+            <div class="press-card">
+                <span class="icon">🗽</span>
+                <h3>Le nouveau temple de la coiffure à New York</h3>
+                <p class="source">Elle Magazine</p>
+                <p>"AWA HAIRCUT DESIGN s'impose comme la référence de la coiffure de luxe à Manhattan. Une expérience unique qui allie savoir-faire français et énergie new-yorkaise."</p>
+                <p class="date">📅 15 juillet 2026</p>
+                <a href="#" class="btn-lire">Lire l'article →</a>
             </div>
-            <div style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--shadow);">
-                <h3 style="font-family: 'Playfair Display', serif;">Vogue</h3>
-                <p style="color: #666;">"L'innovation capillaire au féminin"</p>
+
+            <div class="press-card">
+                <span class="icon">💎</span>
+                <h3>L'innovation capillaire au féminin</h3>
+                <p class="source">Vogue</p>
+                <p>"Avec ses 1000 styles uniques, AWA HAIRCUT DESIGN réinvente l'art de la coiffure. Une approche personnalisée qui séduit les fashionistas du monde entier."</p>
+                <p class="date">📅 1 juin 2026</p>
+                <a href="#" class="btn-lire">Lire l'article →</a>
+            </div>
+
+            <div class="press-card">
+                <span class="icon">✨</span>
+                <h3>Les coupes qui feront tendance en 2026</h3>
+                <p class="source">Harper's Bazaar</p>
+                <p>"Les stylistes d'AWA HAIRCUT DESIGN révèlent les tendances capillaires qui vont marquer l'année. Des coupes audacieuses et des colorations sublimes."</p>
+                <p class="date">📅 15 mai 2026</p>
+                <a href="#" class="btn-lire">Lire l'article →</a>
+            </div>
+
+            <div class="press-card">
+                <span class="icon">🌟</span>
+                <h3>Un salon d'exception à New York</h3>
+                <p class="source">Forbes</p>
+                <p>"AWA HAIRCUT DESIGN est le salon incontournable pour les femmes qui recherchent l'excellence. Un service sur mesure dans un cadre luxueux."</p>
+                <p class="date">📅 20 avril 2026</p>
+                <a href="#" class="btn-lire">Lire l'article →</a>
+            </div>
+
+            <div class="press-card">
+                <span class="icon">🎨</span>
+                <h3>L'art de la coloration selon AWA</h3>
+                <p class="source">Marie Claire</p>
+                <p>"Les coloristes d'AWA HAIRCUT DESIGN maîtrisent l'art de sublimer les cheveux. Des reflets naturels aux couleurs audacieuses, toutes les envies sont possibles."</p>
+                <p class="date">📅 10 mars 2026</p>
+                <a href="#" class="btn-lire">Lire l'article →</a>
+            </div>
+
+            <div class="press-card">
+                <span class="icon">🌍</span>
+                <h3>AWA rayonne sur la scène internationale</h3>
+                <p class="source">Le Figaro</p>
+                <p>"AWA HAIRCUT DESIGN attire une clientèle internationale venue des quatre coins du monde. Un succès qui confirme l'excellence du savoir-faire new-yorkais."</p>
+                <p class="date">📅 1 février 2026</p>
+                <a href="#" class="btn-lire">Lire l'article →</a>
             </div>
         </div>
-    </div>
 
-    <footer class="footer-premium">
-        <div class="footer-bottom"><p>&copy; <%= new Date().getFullYear() %> AWA HAIRCUT DESIGN. Tous droits réservés.</p></div>
-    </footer>
+        <div class="press-cta">
+            <h2>Contact <span>Presse</span></h2>
+            <p>Vous êtes journaliste et souhaitez en savoir plus sur AWA HAIRCUT DESIGN ?</p>
+            <a href="/contact" class="btn-contact">📧 Nous contacter</a>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
 </body>
 </html>

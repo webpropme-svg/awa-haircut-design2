@@ -45,4 +45,32 @@ router.get('/contact', (req, res) => {
   });
 });
 
+router.get('/careers', (req, res) => {
+  res.render('careers', {
+    currentYear: new Date().getFullYear(),
+    title: 'Carrières - AWA HAIRCUT DESIGN'
+  });
+});
+
+router.get('/press', (req, res) => {
+  res.render('press', {
+    currentYear: new Date().getFullYear(),
+    title: 'Presse - AWA HAIRCUT DESIGN'
+  });
+});
+
+router.get('/privacy', (req, res) => {
+  res.render('privacy', {
+    currentYear: new Date().getFullYear(),
+    title: 'Confidentialité - AWA HAIRCUT DESIGN'
+  });
+});
+
+router.get('/guide', (req, res) => {
+  res.render('guide', {
+    currentYear: new Date().getFullYear(),
+    title: 'Guide Complet - AWA HAIRCUT DESIGN'
+  });
+});
+
 module.exports = router;

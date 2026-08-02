@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Complet - AWA HAIRCUT DESIGN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .guide-hero {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .guide-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212,175,55,0.15), transparent 60%);
+        }
+        .guide-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        .guide-hero h1 span { color: var(--gold); }
+        .guide-hero p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 1rem auto 0;
+            position: relative;
+            z-index: 1;
+        }
+        .guide-section {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .guide-block {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--gold);
+        }
+        .guide-block .step {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--text-dark);
+            font-weight: 700;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .guide-block h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+        }
+        .guide-block p, .guide-block li {
+            color: #555;
+            line-height: 1.8;
+        }
+        .guide-block ul { padding-left: 1.5rem; }
+        .guide-block li { margin-bottom: 0.5rem; }
+        .guide-block .icon-large { font-size: 2.5rem; color: var(--gold); display: block; margin-bottom: 0.5rem; }
+        .guide-block .price-tag {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 0.2rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .guide-cta {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 20px;
+            margin-top: 2rem;
+        }
+        .guide-cta h2 { font-family: 'Playfair Display', serif; color: white; font-size: 2rem; }
+        .guide-cta h2 span { color: var(--gold); }
+        .guide-cta p { color: rgba(255,255,255,0.7); max-width: 600px; margin: 1rem auto 2rem; }
+        .guide-cta .btn-rdv {
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--text-dark);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .guide-cta .btn-rdv:hover { transform: scale(1.05); box-shadow: 0 10px 40px rgba(212,175,55,0.3); }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <section class="guide-hero">
+        <h1>Guide <span>Complet</span></h1>
+        <p>Tout ce que vous devez savoir avant votre rendez-vous</p>
+    </section>
+
+    <section class="guide-section">
+        <div class="guide-block">
+            <span class="step">ÉTAPE 1</span>
+            <span class="icon-large">✂️</span>
+            <h2>Choisir son style</h2>
+            <p>Parcourez nos <strong>1000 styles</strong> uniques classés par catégorie :</p>
+            <ul>
+                <li><strong>Coupe</strong> — Classique, moderne, vintage, bohème</li>
+                <li><strong>Couleur</strong> — Blond, brun, roux, châtain, cuivré</li>
+                <li><strong>Brushing</strong> — Lisse, ondulé, volumineux, glossy</li>
+                <li><strong>Coiffage</strong> — Chignon, tresse, queue de cheval</li>
+                <li><strong>Traitement</strong> — Lissage, kératine, nutrition</li>
+                <li><strong>Extension</strong> — Volume, longueur, mèches</li>
+                <li><strong>Mariage</strong> — Chignon romantique, tresse couronne</li>
+                <li><strong>Soin</strong> — Spa capillaire, hydratation, réparation</li>
+            </ul>
+            <p><a href="/gallery" style="color: var(--gold); font-weight:600;">👉 Découvrir tous les styles</a></p>
+        </div>
+
+        <div class="guide-block">
+            <span class="step">ÉTAPE 2</span>
+            <span class="icon-large">💇‍♀️</span>
+            <h2>Réserver un rendez-vous</h2>
+            <ul>
+                <li>Sélectionnez votre style préféré</li>
+                <li>Choisissez la date et l'heure</li>
+                <li>Ajoutez un message si nécessaire</li>
+                <li>Recevez une confirmation par email</li>
+            </ul>
+            <p><a href="/booking" style="color: var(--gold); font-weight:600;">👉 Réserver maintenant</a></p>
+        </div>
+
+        <div class="guide-block">
+            <span class="step">ÉTAPE 3</span>
+            <span class="icon-large">💆‍♀️</span>
+            <h2>Le jour J</h2>
+            <ul>
+                <li>Arrivez 10 minutes avant l'heure prévue</li>
+                <li>Un café ou un thé vous sera offert</li>
+                <li>Notre styliste vous conseille sur le style idéal</li>
+                <li>Profitez d'une expérience de luxe dans un cadre élégant</li>
+            </ul>
+            <p><strong>📍 Adresse :</strong> 12 rue de la Beauté, New York, USA</p>
+        </div>
+
+        <div class="guide-block">
+            <span class="step">ÉTAPE 4</span>
+            <span class="icon-large">✨</span>
+            <h2>Après le rendez-vous</h2>
+            <ul>
+                <li>Recevez des conseils d'entretien personnalisés</li>
+                <li>Découvrez notre gamme de produits recommandés</li>
+                <li>Laissez votre avis et partagez votre expérience</li>
+                <li>Bénéficiez d'une réduction pour votre prochaine visite</li>
+            </ul>
+        </div>
+
+        <div class="guide-block">
+            <span class="step">💎</span>
+            <h2>Tarifs indicatifs</h2>
+            <ul>
+                <li><strong>Coupe</strong> — <span class="price-tag">$120 - $250</span></li>
+                <li><strong>Coloration</strong> — <span class="price-tag">$150 - $350</span></li>
+                <li><strong>Brushing</strong> — <span class="price-tag">$80 - $200</span></li>
+                <li><strong>Coiffage</strong> — <span class="price-tag">$150 - $400</span></li>
+                <li><strong>Traitement</strong> — <span class="price-tag">$100 - $250</span></li>
+                <li><strong>Extensions</strong> — <span class="price-tag">$300 - $800</span></li>
+                <li><strong>Mariage</strong> — <span class="price-tag">$250 - $600</span></li>
+            </ul>
+        </div>
+
+        <div class="guide-cta">
+            <h2>Prête à <span>réserver</span> ?</h2>
+            <p>Vivez l'expérience AWA HAIRCUT DESIGN et sublimez votre beauté.</p>
+            <a href="/booking" class="btn-rdv">📅 Prendre rendez-vous</a>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

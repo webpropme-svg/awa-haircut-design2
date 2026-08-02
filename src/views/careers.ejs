@@ -4,40 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrières - AWA HAIRCUT DESIGN</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .careers-hero {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .careers-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212,175,55,0.15), transparent 60%);
+        }
+        .careers-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        .careers-hero h1 span { color: var(--gold); }
+        .careers-hero p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 1rem auto 0;
+            position: relative;
+            z-index: 1;
+        }
+        .careers-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .job-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--gold);
+            transition: all 0.3s ease;
+        }
+        .job-card:hover { transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+        .job-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; }
+        .job-card .meta { display: flex; gap: 2rem; color: #888; font-size: 0.9rem; margin: 0.5rem 0; flex-wrap: wrap; }
+        .job-card .meta i { color: var(--gold); }
+        .job-card p { color: #555; line-height: 1.8; }
+        .job-card .btn-postuler {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.6rem 2rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--text-dark);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .job-card .btn-postuler:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(212,175,55,0.3); }
+        .apply-section {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 20px;
+            margin-top: 3rem;
+        }
+        .apply-section h2 { font-family: 'Playfair Display', serif; color: white; font-size: 2.5rem; }
+        .apply-section h2 span { color: var(--gold); }
+        .apply-section p { color: rgba(255,255,255,0.7); max-width: 600px; margin: 1rem auto 2rem; }
+        .apply-section .btn-apply {
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--text-dark);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .apply-section .btn-apply:hover { transform: scale(1.05); box-shadow: 0 10px 40px rgba(212,175,55,0.3); }
+    </style>
 </head>
 <body>
-    <header class="header-premium">
-        <nav class="nav-premium">
-            <div class="logo"><a href="/"><span class="logo-text">AWA</span><span class="logo-sub">HAIRCUT DESIGN</span></a></div>
-            <ul class="nav-links">
-                <li><a href="/">Accueil</a></li>
-                <li><a href="/gallery">Galerie</a></li>
-                <li><a href="/booking">Réservation</a></li>
-                <li><a href="/about">À propos</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-            <div class="nav-actions">
-                <a href="/auth/login" class="btn-login"><i class="fas fa-user"></i> Connexion</a>
-                <a href="/booking" class="btn-book">Réserver</a>
+    <%- include('partials/header') %>
+
+    <section class="careers-hero">
+        <h1>Rejoignez <span>l'aventure</span></h1>
+        <p>Des opportunités exceptionnelles vous attendent chez AWA HAIRCUT DESIGN</p>
+    </section>
+
+    <section class="careers-section">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; margin-bottom: 3rem;">
+            Offres d'emploi
+        </h2>
+
+        <div class="job-card">
+            <h3>💇‍♀️ Styliste Senior</h3>
+            <div class="meta">
+                <span><i class="fas fa-map-marker-alt"></i> New York, USA</span>
+                <span><i class="fas fa-clock"></i> Temps plein</span>
+                <span><i class="fas fa-dollar-sign"></i> $60k - $90k / an</span>
             </div>
-        </nav>
-    </header>
-
-    <div style="max-width: 1200px; margin: 4rem auto; padding: 0 2rem; text-align: center;">
-        <h1 style="font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--primary-dark);">Rejoignez-nous</h1>
-        <p style="color: #666; max-width: 600px; margin: 1rem auto 3rem;">Des opportunités exceptionnelles vous attendent chez AWA HAIRCUT DESIGN.</p>
-        <div style="background: white; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow); max-width: 600px; margin: 0 auto;">
-            <h3 style="font-family: 'Playfair Display', serif;">Envoyez votre candidature</h3>
-            <p style="color: #666; margin: 1rem 0;">Email : recrutement@awahaircut.com</p>
-            <p style="color: #666;">Tél : +33 1 23 45 67 89</p>
+            <p>Nous recherchons une styliste experte avec minimum 5 ans d'expérience dans les salons de luxe. Maîtrise des techniques de coupe, couleur et coiffage.</p>
+            <a href="/contact" class="btn-postuler">Postuler</a>
         </div>
-    </div>
 
-    <footer class="footer-premium">
-        <div class="footer-bottom"><p>&copy; <%= new Date().getFullYear() %> AWA HAIRCUT DESIGN. Tous droits réservés.</p></div>
-    </footer>
+        <div class="job-card">
+            <h3>🎨 Coloriste Expert</h3>
+            <div class="meta">
+                <span><i class="fas fa-map-marker-alt"></i> New York, USA</span>
+                <span><i class="fas fa-clock"></i> Temps plein</span>
+                <span><i class="fas fa-dollar-sign"></i> $55k - $80k / an</span>
+            </div>
+            <p>Expert en coloration avec une passion pour les tendances. Connaissance des produits haut de gamme et des techniques de balayage, ombré et colorations créatives.</p>
+            <a href="/contact" class="btn-postuler">Postuler</a>
+        </div>
+
+        <div class="job-card">
+            <h3>🛎️ Réceptionniste/Conseillère</h3>
+            <div class="meta">
+                <span><i class="fas fa-map-marker-alt"></i> New York, USA</span>
+                <span><i class="fas fa-clock"></i> Temps partiel</span>
+                <span><i class="fas fa-dollar-sign"></i> $25k - $35k / an</span>
+            </div>
+            <p>Accueillir les clientes, gérer les rendez-vous et assurer une expérience client exceptionnelle. Excellentes compétences en communication requises.</p>
+            <a href="/contact" class="btn-postuler">Postuler</a>
+        </div>
+
+        <div class="apply-section">
+            <h2>Vous ne trouvez pas <span>votre poste</span> ?</h2>
+            <p>Envoyez-nous votre candidature spontanée. Nous sommes toujours à la recherche de talents exceptionnels.</p>
+            <a href="/contact" class="btn-apply">✉️ Envoyer ma candidature</a>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
 </body>
 </html>
