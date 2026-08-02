@@ -3,14 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title>Connexion Admin - AWA HAIRCUT</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(135deg, #0a0a0f, #14141e);
@@ -28,10 +24,7 @@
             max-width: 400px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
-        .login-container .logo {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+        .login-container .logo { text-align: center; margin-bottom: 2rem; }
         .login-container .logo h1 {
             font-family: 'Playfair Display', serif;
             color: #D4AF37;
@@ -44,16 +37,8 @@
             letter-spacing: 4px;
             display: block;
         }
-        .login-container .logo .lock {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-        .login-container label {
-            color: #8888aa;
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
+        .login-container .logo .lock { font-size: 3rem; margin-bottom: 0.5rem; }
+        .login-container label { color: #8888aa; display: block; margin-bottom: 0.5rem; font-size: 0.9rem; }
         .login-container input {
             width: 100%;
             padding: 0.8rem 1rem;
@@ -65,10 +50,7 @@
             margin-bottom: 1.5rem;
             transition: border-color 0.3s ease;
         }
-        .login-container input:focus {
-            outline: none;
-            border-color: #D4AF37;
-        }
+        .login-container input:focus { outline: none; border-color: #D4AF37; }
         .login-container button {
             width: 100%;
             padding: 0.8rem;
@@ -85,25 +67,11 @@
             transform: scale(1.02);
             box-shadow: 0 5px 30px rgba(212,175,55,0.3);
         }
-        .login-container .error {
-            color: #ff1744;
-            text-align: center;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-        .login-container .back-link {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-        .login-container .back-link a {
-            color: #8888aa;
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.3s ease;
-        }
-        .login-container .back-link a:hover {
-            color: #D4AF37;
-        }
+        .login-container .error { color: #ff1744; text-align: center; margin-top: 1rem; font-size: 0.9rem; }
+        .login-container .back-link { text-align: center; margin-top: 1.5rem; }
+        .login-container .back-link a { color: #8888aa; text-decoration: none; font-size: 0.85rem; }
+        .login-container .back-link a:hover { color: #D4AF37; }
+        .login-container .info { color: #aaa; font-size: 0.8rem; text-align: center; margin-top: 1rem; }
     </style>
 </head>
 <body>
@@ -114,19 +82,17 @@
             <span>ADMIN PANEL</span>
         </div>
         <form method="POST">
-            <label>📧 Email</label>
+            <label>📧 Email Admin</label>
             <input type="email" name="email" placeholder="admin@awahaircut.com" required>
-            <label>🔑 Mot de passe</label>
-            <input type="password" name="password" placeholder="••••••••" required>
             <button type="submit">Se connecter</button>
             <% if (error) { %>
                 <div class="error"><%= error %></div>
             <% } %>
         </form>
+        <div class="info">Aucun mot de passe requis pour l'admin</div>
         <div class="back-link">
             <a href="/">← Retour au site</a>
         </div>
     </div>
 </body>
 </html>
-
