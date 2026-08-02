@@ -41,6 +41,7 @@
             <% } %>
             <a href="/booking" class="btn-book">Réserver</a>
         </div>
+        <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" style="display:none; background:none; border:none; color:white; font-size:2rem; cursor:pointer;">☰</button>
     </nav>
 </header>
 
@@ -54,19 +55,16 @@
     border-radius: 50px;
     border: 1px solid rgba(212, 175, 55, 0.3);
 }
-
 .user-name {
     color: white;
     font-weight: 500;
     font-size: 0.85rem;
 }
-
 .user-role {
     color: var(--gold);
     font-size: 0.7rem;
     margin-left: 0.3rem;
 }
-
 .btn-profile, .btn-logout {
     color: #aaa;
     padding: 0.3rem 0.5rem;
@@ -75,16 +73,13 @@
     text-decoration: none;
     font-size: 1rem;
 }
-
 .btn-profile:hover {
     color: var(--gold);
     transform: rotate(90deg);
 }
-
 .btn-logout:hover {
     color: #ff1744;
 }
-
 .btn-register {
     padding: 0.6rem 1.5rem;
     border-radius: 50px;
@@ -96,9 +91,16 @@
     color: white;
     border: 1px solid rgba(255,255,255,0.3);
 }
-
 .btn-register:hover {
     background: rgba(255,255,255,0.1);
     transform: translateY(-2px);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .menu-toggle { display: block !important; }
+    .nav-links { display: none; flex-direction: column; width: 100%; background: rgba(10,10,10,0.95); padding: 1rem; position: absolute; top: 70px; left: 0; z-index: 999; }
+    .nav-links.open { display: flex; }
+    .nav-actions { flex-wrap: wrap; gap: 0.5rem; }
 }
 </style>
