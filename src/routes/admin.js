@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const Page = require('../models/Page');
+
+// Middleware admin
+function isAdmin(req, res, next) {
+  if (req.session && req.session.isAdmin) {
+    return next();
+  }
+  res.redirect('/admin/login');
+}
 
 // Page de connexion admin
 router.get('/login', (req, res) => {
@@ -11,7 +20,7 @@ router.get('/login', (req, res) => {
   });
 });
 
-// Traitement de la connexion admin
+// Traitement connexion admin
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -32,14 +41,34 @@ router.post('/login', async (req, res) => {
       });
     }
     
-    req.session.adminId = user._id;
     req.session.isAdmin = true;
+    req.session.adminId = user._id;
     
-    res.redirect('/admin/dashboard');
+    res.redirect('/admin');
   } catch (error) {
     res.render('admin/login', {
       title: 'Connexion Admin - AWA HAIRCUT',
       error: error.message
+    });
+  }
+});
+
+// Dashboard admin (protégé)
+router.get('/', isAdmin, async (req, res) => {
+  try {
+    const pageCount = await Page.countDocuments();
+    const userCount = await User.countDocuments();
+    
+    res.render('admin/dashboard', {
+      pageCount,
+      userCount,
+      currentPage: 'dashboard'
+    });
+  } catch (error) {
+    res.render('admin/dashboard', {
+      pageCount: 0,
+      userCount: 0,
+      currentPage: 'dashboard'
     });
   }
 });
