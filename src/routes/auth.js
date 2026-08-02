@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 // Page de connexion
@@ -10,7 +9,7 @@ router.get('/login', (req, res) => {
     title: 'Connexion - AWA HAIRCUT',
     currentYear: new Date().getFullYear(),
     error: null,
-    success: null
+    success: req.query.success || null
   });
 });
 
@@ -24,11 +23,12 @@ router.get('/register', (req, res) => {
   });
 });
 
-// Inscription
+// Traitement de l'inscription
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password, phone } = req.body;
     
+    // Vérifier si l'utilisateur existe déjà
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.render('auth/register', {
@@ -39,40 +39,39 @@ router.post('/register', async (req, res) => {
       });
     }
     
+    // Hasher le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
     
+    // Créer l'utilisateur
     const user = new User({
       name,
       email,
       password: hashedPassword,
       phone: phone || '',
-      role: 'user',
+      isAdmin: email === 'admin@awahaircut.com' ? true : false,
       isActive: true
     });
     
     await user.save();
     
-    res.render('auth/login', {
-      title: 'Connexion - AWA HAIRCUT',
-      currentYear: new Date().getFullYear(),
-      success: '✅ Inscription réussie ! Connectez-vous maintenant.',
-      error: null
-    });
+    // Rediriger vers la page de connexion avec message de succès
+    res.redirect('/auth/login?success=Inscription réussie ! Connectez-vous maintenant.');
   } catch (error) {
     res.render('auth/register', {
       title: 'Inscription - AWA HAIRCUT',
       currentYear: new Date().getFullYear(),
-      error: 'Erreur lors de l\'inscription: ' + error.message,
+      error: 'Erreur: ' + error.message,
       success: null
     });
   }
 });
 
-// Connexion
+// Traitement de la connexion
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     
+    // Trouver l'utilisateur
     const user = await User.findOne({ email });
     if (!user) {
       return res.render('auth/login', {
@@ -83,6 +82,7 @@ router.post('/login', async (req, res) => {
       });
     }
     
+    // Vérifier si le compte est actif
     if (!user.isActive) {
       return res.render('auth/login', {
         title: 'Connexion - AWA HAIRCUT',
@@ -92,6 +92,7 @@ router.post('/login', async (req, res) => {
       });
     }
     
+    // Vérifier le mot de passe
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) {
       return res.render('auth/login', {
@@ -102,11 +103,13 @@ router.post('/login', async (req, res) => {
       });
     }
     
+    // Créer la session
     req.session.userId = user._id;
     req.session.userName = user.name;
     req.session.userEmail = user.email;
-    req.session.userRole = user.role;
+    req.session.userRole = user.isAdmin ? 'admin' : 'user';
     
+    // Rediriger vers l'accueil
     res.redirect('/');
   } catch (error) {
     res.render('auth/login', {
