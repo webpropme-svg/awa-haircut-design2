@@ -8,32 +8,23 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
-  credentials: true
-}));
+app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI,
-    ttl: 14 * 24 * 60 * 60
-  }),
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 1000 * 60 * 60 * 24 * 7
-  }
+  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }
 }));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Import des routes
+// Routes
 const indexRoutes = require('./routes/index');
 const authRoutes = require('./routes/auth');
 const galleryRoutes = require('./routes/gallery');
@@ -45,13 +36,14 @@ const servicesRoutes = require('./routes/services');
 const newsletterRoutes = require('./routes/newsletter');
 const reviewsRoutes = require('./routes/reviews');
 
-// Middleware pour passer l'utilisateur à toutes les vues
+// Middleware user
 app.use((req, res, next) => {
   res.locals.user = req.session.userId ? {
     id: req.session.userId,
-    name: req.session.userName,
+    name: req.session.userName || 'Utilisateur',
     email: req.session.userEmail,
-    role: req.session.userRole
+    role: req.session.userRole || 'user',
+    isAdmin: req.session.isAdmin || false
   } : null;
   next();
 });
@@ -68,27 +60,19 @@ app.use('/services', servicesRoutes);
 app.use('/newsletter', newsletterRoutes);
 app.use('/reviews', reviewsRoutes);
 
-// Page 404
+// 404
 app.use((req, res) => {
   res.status(404).render('pages/404', { 
-    title: 'Page non trouvée - AWA HAIRCUT',
-    currentYear: new Date().getFullYear()
+    title: 'Page non trouvée', 
+    currentYear: new Date().getFullYear() 
   });
 });
 
-// Connexion MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
-  console.log('✅ Connexion MongoDB établie');
+  console.log('✅ MongoDB connecté');
   app.listen(process.env.PORT || 3000, () => {
-    console.log(`🚀 AWA HAIRCUT DESIGN lancé sur le port ${process.env.PORT || 3000}`);
-    console.log(`🌐 http://localhost:${process.env.PORT || 3000}`);
-    console.log(`📄 1000 pages générées dynamiquement`);
+    console.log(`🚀 Serveur sur port ${process.env.PORT || 3000}`);
   });
 })
-.catch(err => {
-  console.error('❌ Erreur MongoDB:', err);
-});
+.catch(err => console.error('❌ MongoDB:', err));

@@ -3,7 +3,6 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
-// Page de connexion
 router.get('/login', (req, res) => {
   res.render('auth/login', {
     title: 'Connexion - AWA HAIRCUT',
@@ -13,7 +12,6 @@ router.get('/login', (req, res) => {
   });
 });
 
-// Page d'inscription
 router.get('/register', (req, res) => {
   res.render('auth/register', {
     title: 'Inscription - AWA HAIRCUT',
@@ -23,7 +21,6 @@ router.get('/register', (req, res) => {
   });
 });
 
-// Inscription
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password, phone } = req.body;
@@ -67,7 +64,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Connexion
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -101,9 +97,11 @@ router.post('/login', async (req, res) => {
       });
     }
     
+    // SESSION
     req.session.userId = user._id;
     req.session.userName = user.name;
     req.session.userEmail = user.email;
+    req.session.userRole = user.isAdmin ? 'admin' : 'user';
     req.session.isAdmin = user.isAdmin || false;
     
     if (user.isAdmin) {
@@ -121,7 +119,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Déconnexion
 router.get('/logout', (req, res) => {
   req.session.destroy();
   res.redirect('/');
