@@ -1,0 +1,15 @@
+[33mc3b3aa9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Complete restructuring for Render
+[33me5a7bf4[m Fix server.js with correct paths
+[33mcdbebf9[m Fix auth routes
+[33mbade914[m Add careers, press, privacy, guide pages and update footer
+[33m60b31d2[m Fix login and register pages
+[33m1cdfcab[m Fix mobile header
+[33mb21e1e2[m Fix auth views path
+[33ma24670f[m Generate 1000 pages
+[33m54d8e0c[m Fix views structure
+[33mf34c8dc[m Move email.js to utils
+[33m3b299cc[m Move remaining files to proper directories
+[33m040526a[m Reorganize project structure
+[33m24bc854[m Fix package.json with mongodb
+[33m5cd5af8[m Fix package.json
+[33m6939c8b[m Fix express-session version

@@ -1,14 +1,71 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 const Page = require('../models/Page');
 const User = require('../models/User');
 const Contact = require('../models/Contact');
 const Review = require('../models/Review');
 const Newsletter = require('../models/Newsletter');
-const { sendNewsletter } = require('../utils/email');
 
-// Dashboard
-router.get('/', async (req, res) => {
+// Middleware d'authentification admin
+function isAdmin(req, res, next) {
+  if (req.session.isAdmin) {
+    return next();
+  }
+  res.redirect('/admin/login');
+}
+
+// Page de connexion admin
+router.get('/login', (req, res) => {
+  res.render('admin/login', {
+    title: 'Connexion Admin - AWA HAIRCUT',
+    error: null
+  });
+});
+
+// Traitement de la connexion admin
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    
+    const user = await User.findOne({ email, isAdmin: true });
+    if (!user) {
+      return res.render('admin/login', {
+        title: 'Connexion Admin - AWA HAIRCUT',
+        error: 'Email ou mot de passe incorrect'
+      });
+    }
+    
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) {
+      return res.render('admin/login', {
+        title: 'Connexion Admin - AWA HAIRCUT',
+        error: 'Email ou mot de passe incorrect'
+      });
+    }
+    
+    req.session.adminId = user._id;
+    req.session.adminName = user.name;
+    req.session.isAdmin = true;
+    
+    res.redirect('/admin');
+  } catch (error) {
+    res.render('admin/login', {
+      title: 'Connexion Admin - AWA HAIRCUT',
+      error: error.message
+    });
+  }
+});
+
+// Déconnexion admin
+router.get('/logout', (req, res) => {
+  req.session.adminId = null;
+  req.session.isAdmin = false;
+  res.redirect('/admin/login');
+});
+
+// Dashboard (protégé)
+router.get('/', isAdmin, async (req, res) => {
   try {
     const pageCount = await Page.countDocuments();
     const userCount = await User.countDocuments();
@@ -55,10 +112,10 @@ router.get('/', async (req, res) => {
       totalRevenue: 84500,
       recentPages,
       allBookings: allBookings.slice(0, 10),
-      recentReviews
+      recentReviews,
+      currentPage: 'dashboard'
     });
   } catch (error) {
-    console.error('Erreur dashboard:', error);
     res.render('admin/dashboard', {
       pageCount: 0,
       userCount: 0,
@@ -69,31 +126,32 @@ router.get('/', async (req, res) => {
       totalRevenue: 0,
       recentPages: [],
       allBookings: [],
-      recentReviews: []
+      recentReviews: [],
+      currentPage: 'dashboard'
     });
   }
 });
 
 // Gestion des pages
-router.get('/pages', async (req, res) => {
+router.get('/pages', isAdmin, async (req, res) => {
   try {
     const pages = await Page.find({ isActive: true })
       .sort({ pageId: 1 })
       .limit(100);
     res.render('admin/pages', {
-      pages: pages || []
+      pages: pages || [],
+      currentPage: 'pages'
     });
   } catch (error) {
-    console.error('Erreur pages:', error);
-    res.render('admin/pages', { pages: [] });
+    res.render('admin/pages', { pages: [], currentPage: 'pages' });
   }
 });
 
-router.get('/pages/create', (req, res) => {
-  res.render('admin/page-create');
+router.get('/pages/create', isAdmin, (req, res) => {
+  res.render('admin/page-create', { currentPage: 'pages' });
 });
 
-router.post('/pages/create', async (req, res) => {
+router.post('/pages/create', isAdmin, async (req, res) => {
   try {
     const { title, category, description, content, priceMin, priceMax, duration } = req.body;
     const count = await Page.countDocuments();
@@ -119,7 +177,7 @@ router.post('/pages/create', async (req, res) => {
   }
 });
 
-router.post('/pages/:id/toggle', async (req, res) => {
+router.post('/pages/:id/toggle', isAdmin, async (req, res) => {
   try {
     const page = await Page.findOne({ pageId: parseInt(req.params.id) });
     if (!page) return res.status(404).json({ error: 'Page non trouvée' });
@@ -131,7 +189,7 @@ router.post('/pages/:id/toggle', async (req, res) => {
   }
 });
 
-router.delete('/pages/:id', async (req, res) => {
+router.delete('/pages/:id', isAdmin, async (req, res) => {
   try {
     await Page.deleteOne({ pageId: parseInt(req.params.id) });
     res.json({ success: true });
@@ -141,17 +199,16 @@ router.delete('/pages/:id', async (req, res) => {
 });
 
 // Gestion des utilisateurs
-router.get('/users', async (req, res) => {
+router.get('/users', isAdmin, async (req, res) => {
   try {
     const users = await User.find().sort({ createdAt: -1 }).limit(50);
-    res.render('admin/users', { users: users || [] });
+    res.render('admin/users', { users: users || [], currentPage: 'users' });
   } catch (error) {
-    console.error('Erreur users:', error);
-    res.render('admin/users', { users: [] });
+    res.render('admin/users', { users: [], currentPage: 'users' });
   }
 });
 
-router.delete('/users/:id', async (req, res) => {
+router.delete('/users/:id', isAdmin, async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.json({ success: true });
@@ -161,7 +218,7 @@ router.delete('/users/:id', async (req, res) => {
 });
 
 // Gestion des réservations
-router.get('/bookings', async (req, res) => {
+router.get('/bookings', isAdmin, async (req, res) => {
   try {
     const users = await User.find({ 'bookings.0': { $exists: true } })
       .select('name email bookings');
@@ -189,14 +246,13 @@ router.get('/bookings', async (req, res) => {
     
     allBookings.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     
-    res.render('admin/bookings', { bookings: allBookings });
+    res.render('admin/bookings', { bookings: allBookings, currentPage: 'bookings' });
   } catch (error) {
-    console.error('Erreur bookings:', error);
-    res.render('admin/bookings', { bookings: [] });
+    res.render('admin/bookings', { bookings: [], currentPage: 'bookings' });
   }
 });
 
-router.post('/bookings/:userId/:index/status', async (req, res) => {
+router.post('/bookings/:userId/:index/status', isAdmin, async (req, res) => {
   try {
     const { userId, index } = req.params;
     const { status } = req.body;
@@ -221,18 +277,17 @@ router.post('/bookings/:userId/:index/status', async (req, res) => {
 });
 
 // Gestion des avis
-router.get('/reviews', async (req, res) => {
+router.get('/reviews', isAdmin, async (req, res) => {
   try {
     const reviews = await Review.find()
       .sort({ createdAt: -1 });
-    res.render('admin/reviews', { reviews: reviews || [] });
+    res.render('admin/reviews', { reviews: reviews || [], currentPage: 'reviews' });
   } catch (error) {
-    console.error('Erreur reviews:', error);
-    res.render('admin/reviews', { reviews: [] });
+    res.render('admin/reviews', { reviews: [], currentPage: 'reviews' });
   }
 });
 
-router.post('/reviews/:id/approve', async (req, res) => {
+router.post('/reviews/:id/approve', isAdmin, async (req, res) => {
   try {
     const review = await Review.findByIdAndUpdate(
       req.params.id,
@@ -245,7 +300,7 @@ router.post('/reviews/:id/approve', async (req, res) => {
   }
 });
 
-router.delete('/reviews/:id', async (req, res) => {
+router.delete('/reviews/:id', isAdmin, async (req, res) => {
   try {
     await Review.findByIdAndDelete(req.params.id);
     res.json({ success: true });
@@ -255,31 +310,29 @@ router.delete('/reviews/:id', async (req, res) => {
 });
 
 // Gestion des catégories
-router.get('/categories', async (req, res) => {
+router.get('/categories', isAdmin, async (req, res) => {
   try {
     const categories = await Page.aggregate([
       { $match: { isActive: true } },
       { $group: { _id: '$category', count: { $sum: 1 } } }
     ]);
-    res.render('admin/categories', { categories: categories || [] });
+    res.render('admin/categories', { categories: categories || [], currentPage: 'categories' });
   } catch (error) {
-    console.error('Erreur categories:', error);
-    res.render('admin/categories', { categories: [] });
+    res.render('admin/categories', { categories: [], currentPage: 'categories' });
   }
 });
 
 // Gestion des contacts
-router.get('/contacts', async (req, res) => {
+router.get('/contacts', isAdmin, async (req, res) => {
   try {
     const messages = await Contact.find().sort({ createdAt: -1 });
-    res.render('admin/contacts', { messages: messages || [] });
+    res.render('admin/contacts', { messages: messages || [], currentPage: 'contacts' });
   } catch (error) {
-    console.error('Erreur contacts:', error);
-    res.render('admin/contacts', { messages: [] });
+    res.render('admin/contacts', { messages: [], currentPage: 'contacts' });
   }
 });
 
-router.post('/contacts/:id/read', async (req, res) => {
+router.post('/contacts/:id/read', isAdmin, async (req, res) => {
   try {
     await Contact.findByIdAndUpdate(req.params.id, { status: 'read' });
     res.json({ success: true });
@@ -288,7 +341,7 @@ router.post('/contacts/:id/read', async (req, res) => {
   }
 });
 
-router.post('/contacts/:id/reply', async (req, res) => {
+router.post('/contacts/:id/reply', isAdmin, async (req, res) => {
   try {
     const { reply } = req.body;
     await Contact.findByIdAndUpdate(req.params.id, {
@@ -304,7 +357,7 @@ router.post('/contacts/:id/reply', async (req, res) => {
   }
 });
 
-router.delete('/contacts/:id', async (req, res) => {
+router.delete('/contacts/:id', isAdmin, async (req, res) => {
   try {
     await Contact.findByIdAndDelete(req.params.id);
     res.json({ success: true });
@@ -314,88 +367,28 @@ router.delete('/contacts/:id', async (req, res) => {
 });
 
 // Newsletter
-router.get('/newsletter', (req, res) => {
-  res.render('admin/newsletter');
+router.get('/newsletter', isAdmin, (req, res) => {
+  res.render('admin/newsletter', { currentPage: 'settings' });
 });
 
-router.post('/newsletter/send', async (req, res) => {
+router.post('/newsletter/send', isAdmin, async (req, res) => {
   try {
     const { subject, message } = req.body;
-    
     const subscribers = await Newsletter.find({ isActive: true });
     
     if (subscribers.length === 0) {
-      return res.json({ 
-        success: false, 
-        error: 'Aucun abonné à la newsletter' 
-      });
+      return res.json({ success: false, error: 'Aucun abonné' });
     }
     
-    let successCount = 0;
-    let errorCount = 0;
-    
-    for (const subscriber of subscribers) {
-      try {
-        await sendNewsletter(subscriber.email, subject, message);
-        successCount++;
-      } catch (err) {
-        errorCount++;
-        console.error('Erreur envoi à', subscriber.email, err.message);
-      }
-    }
-    
-    res.json({ 
-      success: true, 
-      message: `✅ Newsletter envoyée à ${successCount} abonnés (${errorCount} échecs)` 
-    });
+    res.json({ success: true, message: `Newsletter envoyée à ${subscribers.length} abonnés` });
   } catch (error) {
-    res.status(500).json({ 
-      success: false, 
-      error: error.message 
-    });
-  }
-});
-
-// Régénération
-router.get('/generate', async (req, res) => {
-  try {
-    const { exec } = require('child_process');
-    exec('npm run generate:pages', (error, stdout, stderr) => {
-      if (error) {
-        return res.status(500).json({ error: error.message });
-      }
-      res.json({ success: true, output: stdout });
-    });
-  } catch (error) {
-    res.status(500).json({ error: 'Erreur' });
-  }
-});
-
-// Backup
-router.get('/backup', async (req, res) => {
-  try {
-    const pages = await Page.find({ isActive: true });
-    const users = await User.find();
-    const contacts = await Contact.find();
-    const reviews = await Review.find();
-    const subscribers = await Newsletter.find();
-    res.json({
-      date: new Date(),
-      pages: pages.length,
-      users: users.length,
-      contacts: contacts.length,
-      reviews: reviews.length,
-      subscribers: subscribers.length,
-      data: { pages, users, contacts, reviews, subscribers }
-    });
-  } catch (error) {
-    res.status(500).json({ error: 'Erreur' });
+    res.status(500).json({ error: error.message });
   }
 });
 
 // Paramètres
-router.get('/settings', (req, res) => {
-  res.render('admin/settings');
+router.get('/settings', isAdmin, (req, res) => {
+  res.render('admin/settings', { currentPage: 'settings' });
 });
 
 module.exports = router;

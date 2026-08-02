@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f, #14141e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-container {
+            background: #14141e;
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid #2a2a3a;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .login-container .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .login-container .logo h1 {
+            font-family: 'Playfair Display', serif;
+            color: #D4AF37;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+        .login-container .logo span {
+            color: #FFD700;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            display: block;
+        }
+        .login-container .logo .lock {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .login-container label {
+            color: #8888aa;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: #0a0a0f;
+            border: 1px solid #2a2a3a;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.3s ease;
+        }
+        .login-container input:focus {
+            outline: none;
+            border-color: #D4AF37;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #D4AF37, #FFD700);
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #0a0a0f;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .login-container button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 30px rgba(212,175,55,0.3);
+        }
+        .login-container .error {
+            color: #ff1744;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        .login-container .back-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        .login-container .back-link a {
+            color: #8888aa;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+        .login-container .back-link a:hover {
+            color: #D4AF37;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <div class="lock">🔐</div>
+            <h1>AWA</h1>
+            <span>ADMIN PANEL</span>
+        </div>
+        <form method="POST">
+            <label>📧 Email</label>
+            <input type="email" name="email" placeholder="admin@awahaircut.com" required>
+            <label>🔑 Mot de passe</label>
+            <input type="password" name="password" placeholder="••••••••" required>
+            <button type="submit">Se connecter</button>
+            <% if (error) { %>
+                <div class="error"><%= error %></div>
+            <% } %>
+        </form>
+        <div class="back-link">
+            <a href="/">← Retour au site</a>
+        </div>
+    </div>
+</body>
+</html>
+
