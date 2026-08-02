@@ -45,7 +45,7 @@ const servicesRoutes = require('./routes/services');
 const newsletterRoutes = require('./routes/newsletter');
 const reviewsRoutes = require('./routes/reviews');
 
-// Middleware
+// Middleware pour passer l'utilisateur à toutes les vues
 app.use((req, res, next) => {
   res.locals.user = req.session.userId ? {
     id: req.session.userId,
